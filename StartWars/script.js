@@ -4,7 +4,14 @@ const ctx = canvas.getContext('2d');
 const backgroundImg = new Image();
 backgroundImg.src = './tattooine-game-background.png';
 
-const enemiesFrames = ['sith', 'stormtrooper', 'darthvader'];
+const enemiesFrames = [
+  'sith',
+  'stormtrooper',
+  'darthvader',
+  'darthmaul',
+  'darthsidious',
+  'sith2',
+];
 
 const FPS = 30;
 const NEXT_FRAME = 1000 / FPS;
@@ -25,6 +32,15 @@ stormtrooperImg.src = './enemies/stormtrooper.png';
 const darthvaderImg = new Image();
 darthvaderImg.src = './enemies/darthvader.png';
 
+const darthmaulImg = new Image();
+darthmaulImg.src = './enemies/darthmaul.png';
+
+const darthsidiousImg = new Image();
+darthsidiousImg.src = './enemies/darthsidious.png';
+
+const sith2Img = new Image();
+sith2Img.src = './enemies/sith2.png';
+
 const explImg = new Image();
 explImg.src = './explousion.png';
 
@@ -32,6 +48,9 @@ const enemyFrames = {
   sith: sithImg,
   stormtrooper: stormtrooperImg,
   darthvader: darthvaderImg,
+  darthmaul: darthmaulImg,
+  darthsidious: darthsidiousImg,
+  sith2: sith2Img,
 };
 
 const keys = {
