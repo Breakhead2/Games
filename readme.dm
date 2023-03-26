@@ -1,3 +1,3 @@
 #StarWars game
 
-link: https://breakhead2.github.io/Games/StarWars/
+link: https://breakhead2.github.io/Games/StartWars/
