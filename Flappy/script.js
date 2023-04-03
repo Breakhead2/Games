@@ -1,4 +1,5 @@
 import Character from './modules/Character.js';
+import Particle from './modules/Particle.js';
 // import Obstacle from './modules/Obstacle.js';
 
 let canvas = document.getElementById('canvas1');
