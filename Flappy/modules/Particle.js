@@ -3,6 +3,7 @@ class Particle {
     this.x = player.x;
     this.y = player.y + player.height;
     this.color = 'gray';
+    // this.color = 'hasla()';
     this.vy = Math.random() * 1 - 0.5;
     this.vx = gamespeed;
     this.ctx = ctx;

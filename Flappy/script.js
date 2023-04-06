@@ -1,6 +1,6 @@
 import Character from './modules/Character.js';
 import Particle from './modules/Particle.js';
-// import Obstacle from './modules/Obstacle.js';
+import Obstacle from './modules/Obstacle.js';
 
 let canvas = document.getElementById('canvas1');
 let ctx = canvas.getContext('2d');
@@ -19,11 +19,9 @@ const pushParticles = () => {
   for (let i = 0; i < particles.length; i++) {
     particles[i].update();
     particles[i].draw();
-  }
-  //TODO check if particles outside the canvas
-  if (particles.length > 200) {
-    for (let i = 0; i < 20; i++) {
-      particles.pop();
+
+    if (particles[i].x < 0) {
+      particles.splice(i, 1);
     }
   }
 };
@@ -42,9 +40,9 @@ function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   player.update();
+  pushParticles();
   player.draw();
 
-  pushParticles();
   requestAnimationFrame(animate);
 }
 animate();

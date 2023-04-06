@@ -3,7 +3,7 @@ class Character {
     this.angle = 0;
     this.x = 90;
     this.y = canvas.height / 2;
-    this.vy = 3.5;
+    this.vy = 5;
     this.width = 30;
     this.height = 30;
     this.isMove = false;
