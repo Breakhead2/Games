@@ -1,11 +1,11 @@
 class Character {
   constructor(canvas, ctx) {
     this.angle = 0;
-    this.x = 90;
+    this.x = 200;
     this.y = canvas.height / 2;
     this.vy = 5;
-    this.width = 30;
-    this.height = 30;
+    this.width = 20;
+    this.height = 20;
     this.isMove = false;
     this.canvas = canvas;
     this.ctx = ctx;
