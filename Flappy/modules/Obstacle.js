@@ -8,6 +8,7 @@ class Obstacle {
     this.width = 50;
     this.canvas = canvas;
     this.counted = false;
+    this.color = 'hsla(' + Math.random() * 360 + ', ' + '50%, 50%, 1)';
   }
   update() {
     this.x -= this.gamespeed;
@@ -20,9 +21,19 @@ class Obstacle {
     return score;
   }
   draw() {
-    this.fillStyle = 'green';
+    this.ctx.fillStyle = this.color;
+    this.ctx.strokeStyle = 'black';
+
     this.ctx.fillRect(this.x, 0, this.width, this.top);
     this.ctx.fillRect(
+      this.x,
+      this.canvas.height - this.bottom,
+      this.width,
+      this.bottom
+    );
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeRect(this.x, 0, this.width, this.top);
+    this.ctx.strokeRect(
       this.x,
       this.canvas.height - this.bottom,
       this.width,

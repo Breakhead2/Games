@@ -1,20 +1,39 @@
 class Character {
-  constructor(canvas, ctx) {
+  constructor(canvas, ctx, hero) {
     this.angle = 0;
     this.x = 200;
     this.y = canvas.height / 2;
-    this.vy = 5;
-    this.width = 20;
-    this.height = 20;
+    this.vy = 3.5;
     this.isMove = false;
     this.canvas = canvas;
     this.ctx = ctx;
     this.weight = 1;
+    this.image = hero;
+    this.frame = 0;
+    this.originalWidth = 719;
+    this.originalHeight = 612;
+    this.width = this.originalWidth / 15;
+    this.height = this.originalHeight / 15;
+    this.speed = 0;
   }
 
   draw() {
-    this.ctx.fillStyle = 'blue';
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.speed++;
+    if (this.speed % 5 === 0) {
+      this.frame++;
+      if (this.frame > 3) this.frame = 0;
+    }
+    this.ctx.drawImage(
+      this.image,
+      this.frame * this.originalWidth,
+      0,
+      this.originalWidth,
+      this.originalHeight,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   update() {
