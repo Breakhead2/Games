@@ -99,6 +99,7 @@ window.addEventListener('keyup', (e) => {
 
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  handleBackground();
 
   if (enterIsPressed) {
     handleObstacles();
@@ -111,7 +112,6 @@ function animate() {
 
     if (checkCollusion()) return;
   } else {
-    handleBackground();
     player.draw();
     ctx.font = '30px Georgia';
     ctx.fillStyle = 'white';
