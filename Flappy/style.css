@@ -7,9 +7,11 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: #5bc9e1;
 }
 .screen {
   width: 100vw;
+  background-color: #5bc9e1;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -21,9 +23,9 @@ span {
   cursor: pointer;
   font-size: 20px;
   padding: 10px 30px;
-  background-color: blue;
+  background-color: rgb(78, 78, 254);
   color: white;
-  border-radius: 30%;
+  border-radius: 5px;
 }
 .screen.up {
   margin-top: -100vh;

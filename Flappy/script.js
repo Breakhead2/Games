@@ -70,6 +70,7 @@ const checkCollusion = () => {
         ctx.font = '30px Georgia';
         ctx.fillStyle = 'white';
         ctx.fillText('Game over', 240, canvas.height / 2);
+        ctx.fillText('Your score is ' + score, 210, canvas.height / 2 + 50);
         return true;
       }
     }
