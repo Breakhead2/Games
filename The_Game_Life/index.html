@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="js/main.js" defer></script>
+    <title>The Game Life</title>
+</head>
+
+<body>
+
+    <div class="paint-box">
+        <div class="box-up">
+            <div class="tools">
+                <div class="tools-item">
+                    <button class="btn-start">Старт</button>
+                </div>
+                <div class="tools-item">
+                    <button class="btn-pause">Пауза</button>
+                </div>
+                <div class="tools-item">
+                    <button class="btn-reset">Перезагрузить</button>
+                </div>
+                <div class="tools-item">
+                    <input type="color" name="color" id="myColor">
+                </div>
+                <div class="tools-item">
+                    <p>Цикл: <span id="cycle">0</span></p>
+                </div>
+            </div>
+            <div class="htp">
+                <img class="htp" src="./images/htp1.png" alt="how to play">
+                <div class="rules">
+                    <h3 class="rules-heading">Правила</h3>
+                    <p>Каждая клетка на этой поверхности может находиться в двух состояниях: быть «живой» (заполненной)
+                        или быть «мёртвой» (пустой). Клетка имеет восемь соседей, окружающих её.</p>
+                    <p>Распределение живых клеток в начале игры называется первым поколением. Каждое следующее поколение
+                        рассчитывается на основе предыдущего по таким правилам:</p>
+                    <p>В пустой (мёртвой) клетке, рядом с которой ровно три живые клетки, зарождается жизнь;</p>
+                    <p>Если у живой клетки есть две или три живые соседки, то эта клетка продолжает жить; в противном
+                        случае, если соседей меньше двух или больше трёх, клетка умирает («от одиночества» или «от
+                        перенаселённости»)</p>
+                    <p>Эти простые правила приводят к огромному разнообразию форм, которые могут возникнуть в игре.</p>
+                    <br>
+                    <p>Более подробно <a
+                            href="https://ru.wikipedia.org/wiki/%D0%98%D0%B3%D1%80%D0%B0_%C2%AB%D0%96%D0%B8%D0%B7%D0%BD%D1%8C%C2%BB"
+                            target="_blank">здесь</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <canvas id="cnvs" width="450" height="450"></canvas>
+        <p> &copy; Denis Sazonov <span>2021</span></p>
+    </div>
+
+</body>
+
+</html>

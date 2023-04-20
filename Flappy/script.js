@@ -9,6 +9,7 @@ let gamespeed = 2;
 let frame = 0;
 const particles = [];
 const obstacles = [];
+let enterIsPressed = false;
 
 const backgroundImg = new Image();
 backgroundImg.src = './images/BG.png';
@@ -69,6 +70,7 @@ const checkCollusion = () => {
         ctx.font = '30px Georgia';
         ctx.fillStyle = 'white';
         ctx.fillText('Game over', 240, canvas.height / 2);
+        ctx.fillText('Your score is ' + score, 210, canvas.height / 2 + 50);
         return true;
       }
     }
@@ -89,6 +91,7 @@ const handleBackground = () => {
 
 window.addEventListener('keydown', (e) => {
   if (e.code === 'Space') player.isMove = true;
+  if (e.code === 'Enter') enterIsPressed = true;
 });
 
 window.addEventListener('keyup', (e) => {
@@ -98,14 +101,24 @@ window.addEventListener('keyup', (e) => {
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   handleBackground();
-  handleObstacles();
-  player.update();
-  pushParticles();
-  player.draw();
-  ctx.font = '75px Georgia';
-  ctx.fillStyle = 'white';
-  ctx.fillText(score, 450, 50);
-  if (checkCollusion()) return;
+
+  if (enterIsPressed) {
+    handleObstacles();
+    player.draw();
+    player.update();
+    pushParticles();
+    ctx.font = '75px Georgia';
+    ctx.fillStyle = 'white';
+    ctx.fillText(score, 450, 50);
+
+    if (checkCollusion()) return;
+  } else {
+    player.draw();
+    ctx.font = '30px Georgia';
+    ctx.fillStyle = 'white';
+    ctx.fillText('Press Enter for start game', 140, canvas.height / 2 - 20);
+  }
+
   requestAnimationFrame(animate);
 }
 animate();
