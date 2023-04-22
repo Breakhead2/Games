@@ -1,8 +1,9 @@
 function animate() {
-  ctx3.clearRect(0, 0, canvas1.clientWidth, canvas1.height);
+  ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+  ctx3.clearRect(0, 0, canvas3.width, canvas3.height);
   frogger.update();
   frogger.draw();
-
+  handeObstacles();
   requestAnimationFrame(animate);
 }
 

@@ -1,3 +1,4 @@
+//obstacles
 const canvas1 = document.getElementById('canvas1');
 const ctx1 = canvas1.getContext('2d');
 canvas1.width = 600;
@@ -8,6 +9,7 @@ const ctx2 = canvas2.getContext('2d');
 canvas2.width = 600;
 canvas2.height = 600;
 
+//frogger
 const canvas3 = document.getElementById('canvas3');
 const ctx3 = canvas3.getContext('2d');
 canvas3.width = 600;
