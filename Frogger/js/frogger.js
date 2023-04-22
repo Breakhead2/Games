@@ -8,13 +8,44 @@ class Frogger {
     this.y = canvas1.height - this.height - 40;
     this.frameX = 0;
     this.frameY = 0;
+    this.moving = false;
   }
   update() {
-    // console.log('update');
+    if (keys['KeyW'] || keys['ArrowUp']) {
+      if (this.moving === false) {
+        this.y -= grid;
+        this.moving = true;
+      }
+    }
+    if (keys['KeyS'] || keys['ArrowDown']) {
+      if (
+        this.moving === false &&
+        this.y + this.height + grid < canvas1.height
+      ) {
+        this.y += grid;
+        this.moving = true;
+      }
+    }
+    if (keys['KeyA'] || keys['ArrowLeft']) {
+      if (this.moving === false && this.x - grid > 0) {
+        this.x -= grid;
+        this.moving = true;
+      }
+    }
+    if (keys['KeyD'] || keys['ArrowRight']) {
+      if (this.moving === false && this.x + this.width + grid < canvas1.width) {
+        this.x += grid;
+        this.moving = true;
+      }
+    }
+    if (this.y < 0) scored();
   }
   draw() {
     ctx3.fillStyle = 'green';
     ctx3.fillRect(this.x, this.y, this.width, this.height);
+  }
+  jump() {
+    // console.log('jump');
   }
 }
 

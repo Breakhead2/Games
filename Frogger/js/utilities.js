@@ -13,4 +13,29 @@ animate();
 window.addEventListener('keydown', (e) => {
   keys = [];
   keys[e.code] = true; // associative array [key:value]
+
+  if (
+    keys['KeyA'] ||
+    keys['KeyW'] ||
+    keys['KeyD'] ||
+    keys['KeyS'] ||
+    keys['ArrowLeft'] ||
+    keys['ArrowUp'] ||
+    keys['ArrowRight'] ||
+    keys['ArrowDown']
+  ) {
+    frogger.jump();
+  }
 });
+
+window.addEventListener('keyup', (e) => {
+  delete keys[e.code];
+  frogger.moving = false;
+});
+
+function scored() {
+  score++;
+  gameSpeed += 0.05;
+  frogger.x = canvas1.width / 2 - frogger.width / 2;
+  frogger.y = canvas1.height - frogger.height - 40;
+}
