@@ -10,7 +10,7 @@ class Particle {
   draw() {
     if (this.opacity > 0.1) this.opacity -= 0.9;
     if (this.radius > 0.15) this.radius -= 0.14;
-    ctx3.fillStyle = 'rgba(150, 150, 150, ' + this.opacity + ')';
+    ctx3.fillStyle = "rgba(150, 150, 150, " + this.opacity + ")";
     ctx3.beginPath();
     ctx3.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx3.fill();
@@ -24,7 +24,7 @@ class Particle {
     if (this.opacity > 0.05) {
       this.opacity -= 0.05;
     }
-    ctx3.strokeStyle = 'rgba(255, 255, 255, ' + this.opacity + ')';
+    ctx3.strokeStyle = "rgba(255, 255, 255, " + this.opacity + ")";
     ctx3.beginPath();
     if (this.radius < 50) {
       this.radius += 0.5;
@@ -49,14 +49,14 @@ function handleParticles() {
   }
 
   if (
-    (keys['KeyA'] ||
-      keys['KeyW'] ||
-      keys['KeyD'] ||
-      keys['KeyS'] ||
-      keys['ArrowLeft'] ||
-      keys['ArrowUp'] ||
-      keys['ArrowRight'] ||
-      keys['ArrowDown']) &&
+    (keys["KeyA"] ||
+      keys["KeyW"] ||
+      keys["KeyD"] ||
+      keys["KeyS"] ||
+      keys["ArrowLeft"] ||
+      keys["ArrowUp"] ||
+      keys["ArrowRight"] ||
+      keys["ArrowDown"]) &&
     frogger.y > 250 &&
     particlesArray.length < maxParticles + 10
   ) {
@@ -77,14 +77,14 @@ function handleParticles() {
   }
 
   if (
-    (keys['KeyA'] ||
-      keys['KeyW'] ||
-      keys['KeyD'] ||
-      keys['KeyS'] ||
-      keys['ArrowLeft'] ||
-      keys['ArrowUp'] ||
-      keys['ArrowRight'] ||
-      keys['ArrowDown']) &&
+    (keys["KeyA"] ||
+      keys["KeyW"] ||
+      keys["KeyD"] ||
+      keys["KeyS"] ||
+      keys["ArrowLeft"] ||
+      keys["ArrowUp"] ||
+      keys["ArrowRight"] ||
+      keys["ArrowDown"]) &&
     frogger.y > 100 &&
     frogger.y < 250
   ) {

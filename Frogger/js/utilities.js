@@ -5,7 +5,7 @@ function animate() {
   frogger.update();
   frogger.draw();
   handleParticles();
-  // handeObstacles();
+  handeObstacles();
   requestAnimationFrame(animate);
 }
 
@@ -13,25 +13,25 @@ animate();
 
 //event listeners
 
-window.addEventListener('keydown', (e) => {
+window.addEventListener("keydown", (e) => {
   keys = [];
   keys[e.code] = true; // associative array [key:value]
 
   if (
-    keys['KeyA'] ||
-    keys['KeyW'] ||
-    keys['KeyD'] ||
-    keys['KeyS'] ||
-    keys['ArrowLeft'] ||
-    keys['ArrowUp'] ||
-    keys['ArrowRight'] ||
-    keys['ArrowDown']
+    keys["KeyA"] ||
+    keys["KeyW"] ||
+    keys["KeyD"] ||
+    keys["KeyS"] ||
+    keys["ArrowLeft"] ||
+    keys["ArrowUp"] ||
+    keys["ArrowRight"] ||
+    keys["ArrowDown"]
   ) {
     frogger.jump();
   }
 });
 
-window.addEventListener('keyup', (e) => {
+window.addEventListener("keyup", (e) => {
   delete keys[e.code];
   frogger.moving = false;
 });
