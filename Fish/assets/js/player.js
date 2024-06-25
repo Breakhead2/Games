@@ -36,12 +36,6 @@ class Player {
       ctx.stroke();
     }
 
-    ctx.fillStyle = 'red';
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.closePath();
-
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
