@@ -24,6 +24,7 @@ class Babbles {
 
     if (this.distance < this.radius + player.radius) {
       score++;
+      audioArray[Math.floor(Math.random() * 3)].play();
       this.y = canvas.height + 100;
       this.x = Math.random() * canvas.width;
     }

@@ -15,6 +15,17 @@ playerImage.src = './assets/images/__cartoon_fish_06_green_swim.png';
 const playerLeftImage = new Image();
 playerLeftImage.src = './assets/images/output-onlinepngtools.png';
 
+const audio = new Audio();
+audio.src = './assets/audio/pop1.ogg';
+
+const audio2 = new Audio();
+audio2.src = './assets/audio/pop2.ogg';
+
+const audio3 = new Audio();
+audio3.src = './assets/audio/pop3.ogg';
+
+const audioArray = [audio, audio2, audio3];
+
 const mouse = {
   click: false,
   x: canvas.width / 2,
