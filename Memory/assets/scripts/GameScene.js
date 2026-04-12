@@ -32,8 +32,13 @@ class GameScene extends Phaser.Scene {
             for (let i = 0; i < 2; i++) {
                 this.cards.push(new Card(this, value, positions.pop()))
             }
-            console.log(value);
         });
+
+        this.input.on('gameobjectdown', this.onCardClick, this)
+    }
+
+    onCardClick(pointer, card) {
+        card.open();
     }
 
     getCardsPositions() {
