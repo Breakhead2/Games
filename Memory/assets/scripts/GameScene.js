@@ -16,6 +16,24 @@ class GameScene extends Phaser.Scene {
     create() {
         this.createBackground();
         this.createCards();
+        this.start();
+    }
+
+    start() {
+        this.openedCard = null;
+        this.openedCardsCount = 0;
+        this.initCards();
+    }
+
+    initCards() {
+        let positions = this.getCardsPositions();
+
+        this.cards.forEach(card => {
+            let position = positions.pop();
+
+            card.close();
+            card.setPosition(position.x, position.y)
+        })
     }
 
     createBackground() {
@@ -25,12 +43,9 @@ class GameScene extends Phaser.Scene {
     createCards() {
         this.cards = [];
 
-        let positions = this.getCardsPositions();
-        Phaser.Utils.Array.Shuffle(positions); //перемешивает массив
-
         config.cards.forEach(value => {
             for (let i = 0; i < 2; i++) {
-                this.cards.push(new Card(this, value, positions.pop()))
+                this.cards.push(new Card(this, value))
             }
         });
 
@@ -38,7 +53,25 @@ class GameScene extends Phaser.Scene {
     }
 
     onCardClick(pointer, card) {
+        if (card.opened) return false;
+
+        if (this.openedCard) {
+            if (this.openedCard.value === card.value) {
+                this.openedCard = null;
+                ++this.openedCardsCount;
+            } else {
+                this.openedCard.close();
+                this.openedCard = card;
+            }
+        } else {
+            this.openedCard = card;
+        }
+
         card.open();
+
+        if (this.openedCardsCount === this.cards.length / 2) {
+            this.start();
+        }
     }
 
     getCardsPositions() {
@@ -57,6 +90,6 @@ class GameScene extends Phaser.Scene {
             }
         }
 
-        return positions;
+        return Phaser.Utils.Array.Shuffle(positions);
     };
 }
