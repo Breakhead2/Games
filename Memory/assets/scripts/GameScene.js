@@ -15,6 +15,7 @@ class GameScene extends Phaser.Scene {
 
     create() {
         this.createBackground();
+        this.createText(10, 330, 'Time:', { fontFamily: 'Mabook', fontSize: '36px', color: '#ffffff' });
         this.createCards();
         this.start();
     }
@@ -38,6 +39,10 @@ class GameScene extends Phaser.Scene {
 
     createBackground() {
         this.add.sprite(this.sys.game.config.width / 2, this.sys.game.config.height / 2, 'bg');
+    }
+
+    createText(x, y, value, style) {
+        this.add.text(x, y, value, style);
     }
 
     createCards() {
@@ -78,7 +83,7 @@ class GameScene extends Phaser.Scene {
         let positions = [];
         let cardTexture = this.textures.get('card').getSourceImage();
 
-        let offsetX = (this.sys.game.config.width - ((cardTexture.width + config.card.gap) * config.cols)) / 2 + cardTexture.width / 2;
+        let offsetX = (this.sys.game.config.width - ((cardTexture.width + config.card.gap) * config.cols)) / 2 + cardTexture.width / 2 + 50;
         let offsetY = (this.sys.game.config.height - ((cardTexture.height + config.card.gap) * config.rows)) / 2 + cardTexture.height / 2;
 
         for (let i = 0; i < config.cols; i++) {

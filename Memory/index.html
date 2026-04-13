@@ -12,9 +12,19 @@
         canvas {
             width: 100%;
         }
+        @font-face {
+            font-family: 'Mabook';
+            src: url('./assets/fonts/Mabook.ttf');
+        }
+        .fontPreload {
+            font-family: 'Mabook';
+            position: absolute;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
+    <div class="fontPreload">.</div>
     <!-- Подключаем движок -->
     <script src="assets/scripts/phaser.js"></script>
     <script src="assets/scripts/Card.js"></script>

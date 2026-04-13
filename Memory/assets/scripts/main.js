@@ -7,7 +7,7 @@ let config = {
     card: {
         width: 196,
         height: 306,
-        gap: 14
+        gap: 7
     },
     cards: [1, 2, 3, 4, 5],
     scene: new GameScene(),
