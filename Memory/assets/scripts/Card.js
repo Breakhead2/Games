@@ -3,7 +3,6 @@ class Card extends Phaser.GameObjects.Sprite {
         super(scene, 0, 0, 'card');
         this.scene = scene;
         this.value = value;
-        this.setOrigin(0, 0);
         this.scene.add.existing(this);
         this.opened = false;
 
@@ -13,12 +12,35 @@ class Card extends Phaser.GameObjects.Sprite {
     }
 
     open() {
-        this.setTexture('card' + this.value);
+        this.flip('card' + this.value);
         this.opened = true;
     }
 
     close() {
-        this.setTexture('card');
+        this.flip('card');
         this.opened = false;
+    }
+
+    flip(texture) {
+        this.scene.tweens.add({
+            targets: this,
+            scaleX: 0,
+            ease: 'Linear',
+            duration: 250,
+            onComplete: () => {
+                this.show(texture);
+            }
+        });
+    }
+
+    show(texture) {
+        this.setTexture(texture);
+        this.scene.tweens.add({
+            targets: this,
+            scaleX: 1,
+            ease: 'Linear',
+            duration: 250,
+        
+        });
     }
 }
