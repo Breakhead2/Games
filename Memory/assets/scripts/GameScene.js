@@ -30,7 +30,7 @@ class GameScene extends Phaser.Scene {
     }
 
     start() {
-        this.timeout = 60;
+        this.timeout = config.timeout;
         this.openedCard = null;
         this.openedCardsCount = 0;
 
@@ -38,6 +38,7 @@ class GameScene extends Phaser.Scene {
         this.isWin = false;
 
         this.initCards();
+        this.showCards();
 
         this.createTimer();
 
@@ -48,11 +49,14 @@ class GameScene extends Phaser.Scene {
         let positions = this.getCardsPositions();
 
         this.cards.forEach(card => {
-            let position = positions.pop();
-
-            card.close();
-            card.setPosition(position.x, position.y)
+            card.init(positions.pop());
         })
+    }
+
+    showCards() {
+        this.cards.forEach(card => {
+            card.move(card.position);
+        }) 
     }
 
     createSounds() {
@@ -129,7 +133,7 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    onCardClick(pointer, card) {
+    onCardClick(card) {
         if (card.opened) return false;
 
         this.sounds.card.play();
@@ -176,12 +180,16 @@ class GameScene extends Phaser.Scene {
         let offsetX = (this.sys.game.config.width - ((cardTexture.width + config.card.gap) * config.cols)) / 2 + cardTexture.width / 2 + 50;
         let offsetY = (this.sys.game.config.height - ((cardTexture.height + config.card.gap) * config.rows)) / 2 + cardTexture.height / 2;
 
-        for (let i = 0; i < config.cols; i++) {
-            for (let j = 0; j < config.rows; j++) {
+        let index = 0;
+
+        for (let row = 0; row < config.rows; row++) {
+            for (let col = 0; col < config.cols; col++) {
                 positions.push({
-                    x: i * (cardTexture.width + config.card.gap) + offsetX,
-                    y: j * (cardTexture.height + config.card.gap) + offsetY
+                    delay: ++index * 100,
+                    x: col * (cardTexture.width + config.card.gap) + offsetX,
+                    y: row * (cardTexture.height + config.card.gap) + offsetY,
                 })
+                index++;
             }
         }
 

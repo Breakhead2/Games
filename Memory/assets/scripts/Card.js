@@ -7,8 +7,6 @@ class Card extends Phaser.GameObjects.Sprite {
         this.opened = false;
 
         this.setInteractive();
-
-        // this.on('pointerdown', this.open, this);
     }
 
     open() {
@@ -21,6 +19,26 @@ class Card extends Phaser.GameObjects.Sprite {
             this.flip();
             this.opened = false;
         }
+    }
+
+    init(position) {
+        this.position = position;
+        this.delay = position.delay;
+
+        this.close();
+        this.setPosition(-this.width, -this.height);
+    }
+
+    move(position) {
+        this.scene.tweens.add({
+            targets: this,
+            x: position.x,
+            y: position.y,
+            delay: position.delay,
+            scale: 1,
+            ease: 'Back.easeOut',
+            duration: 600
+        });
     }
 
     flip() {
