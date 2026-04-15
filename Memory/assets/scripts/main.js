@@ -1,0 +1,16 @@
+let config = {
+    type: Phaser.AUTO, // webgl or canvas
+    width: 1280,
+    height: 720,
+    rows: 2,
+    cols: 5,
+    card: {
+        width: 196,
+        height: 306,
+        gap: 7
+    },
+    cards: [1, 2, 3, 4, 5],
+    scene: new GameScene(),
+    timeout: 60
+};
+let game = new Phaser.Game(config);
