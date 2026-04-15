@@ -12,28 +12,31 @@ class Card extends Phaser.GameObjects.Sprite {
     }
 
     open() {
-        this.flip('card' + this.value);
+        this.flip();
         this.opened = true;
     }
 
     close() {
-        this.flip('card');
-        this.opened = false;
+        if (this.opened) {
+            this.flip();
+            this.opened = false;
+        }
     }
 
-    flip(texture) {
+    flip() {
         this.scene.tweens.add({
             targets: this,
             scaleX: 0,
             ease: 'Linear',
             duration: 250,
             onComplete: () => {
-                this.show(texture);
+                this.show();
             }
         });
     }
 
-    show(texture) {
+    show() {
+        let texture = this.opened ? 'card' + this.value : 'card'
         this.setTexture(texture);
         this.scene.tweens.add({
             targets: this,

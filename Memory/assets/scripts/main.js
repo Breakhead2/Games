@@ -11,5 +11,6 @@ let config = {
     },
     cards: [1, 2, 3, 4, 5],
     scene: new GameScene(),
+    timeout: 30
 };
 let game = new Phaser.Game(config);
