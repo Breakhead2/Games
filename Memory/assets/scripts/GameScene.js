@@ -56,6 +56,7 @@ class GameScene extends Phaser.Scene {
     showCards() {
         this.cards.forEach(card => {
             card.move(card.position);
+            card.depth = card.position.delay;
         }) 
     }
 
@@ -133,7 +134,7 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    onCardClick(card) {
+    onCardClick(pointer, card) {
         if (card.opened) return false;
 
         this.sounds.card.play();
@@ -159,7 +160,7 @@ class GameScene extends Phaser.Scene {
             if (this.isWin) return;
             this.isWin = true;
 
-            this.timer.remove(); // ❗ стоп таймера
+            this.timer.remove();
 
             this.sounds.theme.stop();
 

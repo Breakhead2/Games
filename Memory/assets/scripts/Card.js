@@ -61,7 +61,6 @@ class Card extends Phaser.GameObjects.Sprite {
             scaleX: 1,
             ease: 'Linear',
             duration: 250,
-        
         });
     }
 }
