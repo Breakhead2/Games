@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dragon</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        canvas {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        @font-face {
+            font-family: 'Mabook';
+            src: url('./assets/fonts/Mabook.ttf');
+        }
+        .fontPreload {
+            font-family: 'Mabook';
+            position: absolute;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="fontPreload">.</div>
+    <!-- Подключаем движок -->
+    <script src="assets/scripts/libs/phaser.min.js"></script>
+    <script src="assets/scripts/scences/StartScene.js"></script>
+    <script src="assets/scripts/main.js"></script>
+</body>
+</html>
