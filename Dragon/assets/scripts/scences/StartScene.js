@@ -4,10 +4,11 @@ class StartScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('bg', './assets/sprites/background.png');
+        console.log('Start.scene preload');
     }
 
     create() {
+        console.log('Start.scene create');
         this.createBackground();
     }
 
