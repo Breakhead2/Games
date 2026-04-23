@@ -1,18 +1,6 @@
-class Player extends Phaser.GameObjects.Sprite {
-    constructor(scene) {
-        super(scene, 150, scene.sys.game.config.height / 2, 'dragon', 'dragon1');
-
-        this.init();
-    }
-
-    init() {
-        this.scene.add.existing(this);
-        
-        //подключаем движок к спрайту
-        this.scene.physics.add.existing(this);
-        this.body.enable = true;
-
-        this.velocity = 500;     
+class Player extends Enemy {
+    constructor(scene, x, y, sprite, frame, velocity) {
+        super(scene, x, y, sprite, frame, velocity);
     }
 
     move() {   
