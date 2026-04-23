@@ -5,6 +5,7 @@ class GameScene extends Phaser.Scene {
 
     init() {        
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.bgSpeed = 50;
     }
 
     preload() {
@@ -15,11 +16,12 @@ class GameScene extends Phaser.Scene {
         this.player = new Player(this);         
     }
 
-    update() {
+    update(time, delta) {
+        this.bg.tilePositionX += this.bgSpeed * (delta / 1000);
         this.player.move();
     }
 
     createBackground() {
-        this.add.image(0, 0, 'bg').setOrigin(0);
+        this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'bg').setOrigin(0);
     }
 }
