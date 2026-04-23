@@ -3,13 +3,20 @@ class GameScene extends Phaser.Scene {
         super('Game');
     }
 
+    init() {        
+        this.cursors = this.input.keyboard.createCursorKeys();
+    }
+
     preload() {
-        console.log('Game.scene preload');
     }
 
     create() {
-        console.log('Game.scene create');
         this.createBackground();
+        this.player = new Player(this);         
+    }
+
+    update() {
+        this.player.move();
     }
 
     createBackground() {
