@@ -48,8 +48,6 @@ class Enemy extends Phaser.GameObjects.Sprite {
     update() {
         if (this.active && this.x < -this.width) {
             this.setAlive(false);
-            console.log('deactivated');
-            
         }
     }
 
