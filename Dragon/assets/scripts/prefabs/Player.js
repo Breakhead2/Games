@@ -1,6 +1,7 @@
 class Player extends Enemy {
-    constructor(scene, x, y, sprite, frame, velocity) {
-        super(scene, x, y, sprite, frame, velocity);
+    constructor(scene) {
+        super(scene,  150, config.height / 2, 'dragon', 'dragon1');
+        this.velocity = 500;
     }
 
     move() {   

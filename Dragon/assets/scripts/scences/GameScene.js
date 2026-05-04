@@ -10,14 +10,14 @@ class GameScene extends Phaser.Scene {
 
     create() {
         this.createBackground();
-        this.player = new Player(this, 150, config.height / 2, 'dragon', 'dragon1', 500);  
-        this.enemy = new Enemy(this, config.width, config.height / 2, 'enemy', 'enemy1', 250);       
+        this.player = new Player(this);
+        this.enemies = new Enemies(this);
+        this.enemies.createEnemy(); 
     }
 
     update(time, delta) {
         this.bg.tilePositionX += this.bgSpeed * (delta / 1000);
         this.player.move();
-        this.enemy.move();
     }
 
     createBackground() {
