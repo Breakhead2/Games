@@ -1,13 +1,6 @@
-class Fire extends Phaser.GameObjects.Sprite {
+class Fire extends MoveableObject {
     constructor(data) {
-        super(data.scene, data.x, data.y, data.sprite, data.frame);
-        
-        this.velocity = data.velocity;
-        this.init(data);
-    }
-
-    init() {
-        this.scene.add.existing(this);
+        super(data);
     }
 
     static generate(scene, source) {
@@ -20,11 +13,7 @@ class Fire extends Phaser.GameObjects.Sprite {
         });
     }
 
-    move() {
-        this.body.setVelocityX(this.velocity);
-    }
-
-    reset() {
-
+    isDead() {
+        return this.x > this.scene.sys.game.config.width + this.width || this.x < - this.width;
     }
 }

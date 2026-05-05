@@ -1,54 +1,38 @@
-class Enemy extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, sprite, frame) {
-        super(scene, x, y, sprite, frame);
-        
-        this.velocity = 250;
-        this.init();
+class Enemy extends MoveableObject {
+    constructor(data) {
+        super(data);
     }
 
     static generate(scene) {
-        const x = config.width + config.padding;
-        const id = Phaser.Math.Between(1, 4);
-
-        const enemy = new Enemy(scene, x, 0, 'enemy', `enemy${id}`);
+        const enemy = new Enemy({
+            scene,
+            x: scene.sys.game.config.width + scene.sys.game.config.padding,
+            y: 0,
+            sprite: 'enemy',
+            frame: `enemy${Phaser.Math.Between(1, 4)}`,
+            velocity: -250
+        });
 
         enemy.y = Phaser.Math.Between(
-            config.padding + enemy.height / 2,
-            config.height - config.padding - enemy.height / 2
+            scene.sys.game.config.padding + enemy.height / 2,
+            scene.sys.game.config.height - scene.sys.game.config.padding - enemy.height / 2
         );
 
         return enemy;
     }
 
-    init() {
-        this.scene.add.existing(this);
-        
-        this.scene.physics.add.existing(this);
-        this.body.enable = true;
-
-        this.scene.events.on('update', this.update, this);
-    }
-
-    move() {   
-        this.body.setVelocityX(-this.velocity);
-    }
-
     reset() {
-        this.x = config.width + config.padding;
-        this.y = Phaser.Math.Between(
-            config.padding + this.height / 2,
-            config.height - config.padding - this.height / 2
-        );
-        const id = Phaser.Math.Between(1, 4);
-
-        this.setFrame(`enemy${id}`);
+        super.reset(this.scene.sys.game.config.width + this.scene.sys.game.config.padding, Phaser.Math.Between(
+            this.scene.sys.game.config.padding + this.height / 2,
+            this.scene.sys.game.config.height - this.scene.sys.game.config.padding - this.height / 2
+        ));
+        
+        this.setFrame(`enemy${Phaser.Math.Between(1, 4)}`);
         this.setAlive(true);
     }
 
-    update() {
-        if (this.active && this.x < -this.width) {
-            this.setAlive(false);
-        }
+    isDead() {
+        return this.x < -this.width;
     }
 
     setAlive(status) {

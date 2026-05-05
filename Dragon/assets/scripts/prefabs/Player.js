@@ -1,7 +1,13 @@
 class Player extends Enemy {
     constructor(scene) {
-        super(scene,  150, config.height / 2, 'dragon', 'dragon1');
-        this.velocity = 500;
+        super({
+            scene,
+            x: 150,
+            y: scene.sys.game.config.height / 2,
+            sprite: 'dragon',
+            frame: 'dragon1',
+            velocity: 500
+        });
         this.scene = scene;
     }
 
@@ -63,4 +69,4 @@ class Player extends Enemy {
             }
         }
     }
-}
+} 
