@@ -1,19 +1,15 @@
-class Fire extends MoveableObject {
-    constructor(data) {
-        super(data);
-    }
-
+class Fire extends MovableObject {
     static generate(scene, source) {
-        return new Fire({
+        const data = {
             scene,
-            x: source.x + source.width / 2,
+            x: source.x,
             y: source.y,
-            sprite: 'fire',
-            velocity: 300
-        });
+            texture: source.bullet.texture,
+            velocity: source.bullet.velocity
+        };
+        return new Fire(data);
     }
-
     isDead() {
-        return this.x > this.scene.sys.game.config.width + this.width || this.x < - this.width;
+        return this.x < -this.width || this.x > config.width + this.width;
     }
 }

@@ -1,46 +1,43 @@
-class Enemy extends MoveableObject {
-    constructor(data) {
-        super(data);
+class Enemy extends MovableObject {
+    static generateAttributes() {
+        const x = config.width + 200;
+        const y = Phaser.Math.Between(100, config.height - 100);
+        return {x, y, frame: `enemy${Phaser.Math.Between(1, 4)}`};
     }
-
     static generate(scene) {
-        const enemy = new Enemy({
+        const data = Enemy.generateAttributes();
+        return new Enemy({
             scene,
-            x: scene.sys.game.config.width + scene.sys.game.config.padding,
-            y: 0,
-            sprite: 'enemy',
-            frame: `enemy${Phaser.Math.Between(1, 4)}`,
-            velocity: -250
+            x: data.x,
+            y: data.y,
+            texture: 'enemy',
+            frame: data.frame,
+            velocity: -250,
+            bullet: {delay: 1000, texture: 'bullet', velocity: -500},
+            origin: {x: 0, y: 0.5}
         });
-
-        enemy.y = Phaser.Math.Between(
-            scene.sys.game.config.padding + enemy.height / 2,
-            scene.sys.game.config.height - scene.sys.game.config.padding - enemy.height / 2
-        );
-
-        return enemy;
     }
-
+    init(data) {
+        super.init(data);
+        this.setOrigin(data.origin.x, data.origin.y);
+        this.fires = new Fires(this.scene);
+        this.timer = this.scene.time.addEvent({
+            delay: data.bullet.delay,
+            loop: true,
+            callback: this.fire,
+            callbackScope: this
+        });
+        this.bullet = data.bullet;
+    }
+    fire() {
+        this.fires.createFire(this);
+    }
     reset() {
-        super.reset(this.scene.sys.game.config.width + this.scene.sys.game.config.padding, Phaser.Math.Between(
-            this.scene.sys.game.config.padding + this.height / 2,
-            this.scene.sys.game.config.height - this.scene.sys.game.config.padding - this.height / 2
-        ));
-        
-        this.setFrame(`enemy${Phaser.Math.Between(1, 4)}`);
-        this.setAlive(true);
+        const data = Enemy.generateAttributes();
+        super.reset(data.x, data.y);
+        this.setFrame(data.frame);
     }
-
     isDead() {
         return this.x < -this.width;
-    }
-
-    setAlive(status) {
-        // активировать/деактивировать физ тело
-        this.body.enable = status;
-        // показать/скрыть текстуру
-        this.setVisible(status);
-        // активировать/деактировать объект
-        this.setActive(status);
     }
 }
