@@ -24,6 +24,10 @@ class MovableObject extends Phaser.GameObjects.Sprite {
         }
     }
     setAlive(status) {
+        if (this.timer) {
+            this.timer.paused = !status;
+        }
+
         // активировать/деактивировать физическое тело
         this.body.enable = status;
         // скрыть/показать текстуру

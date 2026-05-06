@@ -2,7 +2,7 @@ class Enemies extends Phaser.Physics.Arcade.Group {
     constructor(scene) {
         super();
         this.scene = scene;
-
+        this.fires = new Fires(this.scene);
         this.countMax = 5;
         this.countCreated = 0;
 
@@ -27,7 +27,7 @@ class Enemies extends Phaser.Physics.Arcade.Group {
 
         if (!enemy) {
             console.log('create new enemy');
-            enemy  = Enemy.generate(this.scene);
+            enemy  = Enemy.generate(this.scene, this.fires);
             this.add(enemy);
         } else {
             console.log('reset existing enemy');
