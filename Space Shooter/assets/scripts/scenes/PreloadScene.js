@@ -11,11 +11,12 @@ export class PreloadScene extends BaseScene {
         //sounds
         this.load.audio('menu', './assets/sounds/menu.mp3');
         this.load.audio('game', './assets/sounds/game.ogg');
+        this.createBackground();
         this.createLoadBar();
     }
 
     create() {
-        super.create();
+        // super.create();
     }
 
     createLoadBar() {

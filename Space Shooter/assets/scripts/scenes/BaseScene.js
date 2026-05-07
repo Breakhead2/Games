@@ -156,18 +156,11 @@ export class BaseScene extends Phaser.Scene {
     }
 
     createText() {
-        // Проверяем, существует ли уже текст, чтобы не создавать дубликаты
-        if (!this.game.registry.has('titleText')) {
-            const title = this.add.text(this.sys.game.config.width / 2, 200, 'SPACE SHOOTER', {
-                fontFamily: 'PressStart2P',
-                fontSize: '48px',
-                color: '#ffffff'
-            }).setOrigin(0.5);
-            
-            // Сохраняем текст в реестр, если он общий для всех сцен
-            // Но лучше создавать текст отдельно для каждой сцены, так как он может мешать
-            this.game.registry.set('titleText', title);
-        }
+        const title = this.add.text(this.sys.game.config.width / 2, 200, 'SPACE SHOOTER', {
+            fontFamily: 'PressStart2P',
+            fontSize: '48px',
+            color: '#ffffff'
+        }).setOrigin(0.5);
     }
 
     createBackground() {
