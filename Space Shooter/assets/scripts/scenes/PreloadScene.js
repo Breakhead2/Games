@@ -62,11 +62,7 @@ export class PreloadScene extends BaseScene {
             this.percentText.setText('100%');
             this.loaderFill.width = loaderWidth - 2;
             
-            this.cameras.main.flash(500, 255, 255, 255);
-            
-            this.time.delayedCall(300, () => {
-                this.scene.start('Menu');
-            });
+            this.goToMenuScene();
         });
     }
 }
