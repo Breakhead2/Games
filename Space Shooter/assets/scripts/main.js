@@ -3,29 +3,21 @@ import { PreloadScene } from './scenes/PreloadScene.js';
 import { StartScene } from './scenes/StartScene.js';
 import { GameScene } from './scenes/GameScene.js';
 
-const config = {
+export const config = {
     type: Phaser.AUTO,
-    width: 600,
-    height: 800,
-    scene: [BootScene, PreloadScene, StartScene, GameScene],
+    width: 800,
+    height: 960,
+    parent: 'game-container',
     scale: {
-        mode: Phaser.Scale.FIT,
-        autoCenter: Phaser.Scale.CENTER_BOTH,
-        parent: 'game-container',
-        width: '100%',
-        height: '100%',
+        mode: Phaser.Scale.FIT
     },
-    input: {
-        touch: true,
-        mouse: true
+    render: {
+        pixelArt: true,
+        antialias: false
     },
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 },
-            debug: false
-        }
-    },
+    padding: 100,
+
+    scene: [BootScene, PreloadScene, StartScene, GameScene]
 };
 
 const game = new Phaser.Game(config);
