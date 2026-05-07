@@ -10,6 +10,24 @@ class Player extends Enemy {
             bullet: {delay: 500, texture: 'fire', velocity: 750},
             origin: {x: 1, y: 0.5}
         });
+
+        // Сгенерировать набор фреймов текстуры, необходимых для анимации
+        const frames = this.scene.anims.generateFrameNames('dragon', {
+            prefix: 'dragon',
+            start: 1,
+            end: 6
+        });
+
+        // Создать новую анимацию на основе полученного набора фреймов
+        this.scene.anims.create({
+            key: 'fly',
+            frames,
+            frameRate: 10,
+            repeat: -1
+        });
+
+        // Запустить анимацию
+        this.play('fly');
     }
     move() {
         this.body.setVelocity(0);

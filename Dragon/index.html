@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dragon</title>
+    <meta charset="UTF-8" />
+    <title>Side Scroller Shooter Game</title>
     <style>
         body {
             padding: 0;
@@ -15,29 +14,31 @@
             width: 100%;
         }
         @font-face {
-            font-family: 'Mabook';
-            src: url('./assets/fonts/Mabook.ttf');
+            font-family: 'CurseCasual';
+            src: url('assets/fonts/CurseCasual.ttf');
         }
         .fontPreload {
-            font-family: 'Mabook';
+            font-family: 'CurseCasual';
             position: absolute;
-            opacity: 0;
+            left: -100px;
         }
     </style>
 </head>
 <body>
     <div class="fontPreload">.</div>
-    <script src="assets/scripts/libs/phaser.min.js"></script>
+    <script src="assets/scripts/libs/phaser.js"></script>
+    <script src="assets/scripts/classes/LoadingBar.js"></script>
+    <script src="assets/scripts/prefabs/Boom.js"></script>
     <script src="assets/scripts/prefabs/MovableObject.js"></script>
+    <script src="assets/scripts/prefabs/Fire.js"></script>
+    <script src="assets/scripts/prefabs/Fires.js"></script>
     <script src="assets/scripts/prefabs/Enemies.js"></script>
     <script src="assets/scripts/prefabs/Enemy.js"></script>
-    <script src="assets/scripts/prefabs/Fires.js"></script>
-    <script src="assets/scripts/prefabs/Fire.js"></script>
     <script src="assets/scripts/prefabs/Player.js"></script>
-    <script src="assets/scripts/scences/BootScene.js"></script>
-    <script src="assets/scripts/scences/PreloadScene.js"></script>
-    <script src="assets/scripts/scences/StartScene.js"></script>
-    <script src="assets/scripts/scences/GameScene.js"></script>
+    <script src="assets/scripts/scenes/BootScene.js"></script>
+    <script src="assets/scripts/scenes/PreloadScene.js"></script>
+    <script src="assets/scripts/scenes/GameScene.js"></script>
+    <script src="assets/scripts/scenes/StartScene.js"></script>
     <script src="assets/scripts/main.js"></script>
 </body>
 </html>
