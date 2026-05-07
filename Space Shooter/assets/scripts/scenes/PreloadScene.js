@@ -1,5 +1,4 @@
 import { BaseScene } from "./BaseScene.js";
-import { config } from "../main.js";
 
 export class PreloadScene extends BaseScene {
     constructor() {
@@ -8,6 +7,10 @@ export class PreloadScene extends BaseScene {
 
     preload() {
         this.load.image('ship', './assets/sprites/ship.png');
+
+        //sounds
+        this.load.audio('menu', './assets/sounds/menu.mp3');
+        this.load.audio('game', './assets/sounds/game.ogg');
         this.createLoadBar();
     }
 
@@ -16,18 +19,17 @@ export class PreloadScene extends BaseScene {
     }
 
     createLoadBar() {
-        const centerX = this.sys.game.config.width / 2;
         const loaderY = this.sys.game.config.height - 150;
-        const loaderWidth = this.sys.game.config.width - 2 * config.padding;
+        const loaderWidth = this.sys.game.config.width - 2 * this.padding;
 
-        const barBackground = this.add.rectangle(centerX, loaderY, loaderWidth, 30, 0x111122);
+        const barBackground = this.add.rectangle(this.centerX, loaderY, loaderWidth, 30, 0x111122);
         barBackground.setStrokeStyle(2, 0x00ffff);
 
-        this.loaderFill = this.add.rectangle(centerX - loaderWidth / 2 + 2, loaderY, 0, 24, 0x00ff66);
+        this.loaderFill = this.add.rectangle(this.centerX - loaderWidth / 2 + 2, loaderY, 0, 24, 0x00ff66);
         this.loaderFill.setOrigin(0, 0.5);
 
         this.percentText = this.add.text(
-            centerX,
+            this.centerX,
             loaderY - 35,
             '0%',
             {
@@ -61,8 +63,8 @@ export class PreloadScene extends BaseScene {
             
             this.cameras.main.flash(500, 255, 255, 255);
             
-            this.time.delayedCall(1000, () => {
-                this.scene.start('Start');
+            this.time.delayedCall(300, () => {
+                this.scene.start('Menu');
             });
         });
     }

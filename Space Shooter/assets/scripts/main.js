@@ -1,9 +1,11 @@
 import { BootScene } from './scenes/BootScene.js';
 import { PreloadScene } from './scenes/PreloadScene.js';
-import { StartScene } from './scenes/StartScene.js';
+import { MenuScene } from './scenes/MenuScene.js';
+import { TutorialScene } from './scenes/TutorialScene.js';
+import { ScoresScene } from './scenes/ScoresScene.js';
 import { GameScene } from './scenes/GameScene.js';
 
-export const config = {
+const config = {
     type: Phaser.AUTO,
     width: 800,
     height: 960,
@@ -15,9 +17,20 @@ export const config = {
         pixelArt: true,
         antialias: false
     },
-    padding: 100,
 
-    scene: [BootScene, PreloadScene, StartScene, GameScene]
+    scene: [
+        BootScene, 
+        PreloadScene, 
+        MenuScene, 
+        TutorialScene, 
+        ScoresScene, 
+        GameScene
+    ]
 };
 
 const game = new Phaser.Game(config);
+game.registry.set('soundEnabled', true);
+game.registry.set('globalMusic', {
+    currentMusic: null,
+    currentKey: null
+});
