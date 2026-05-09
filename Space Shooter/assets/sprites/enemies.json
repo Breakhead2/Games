@@ -1,0 +1,188 @@
+{
+	"textures": [
+		{
+			"image": "enemies.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 987,
+				"h": 807
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "enemy_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 330,
+						"y": 1,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 659,
+						"y": 1,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 1,
+						"y": 270,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 1,
+						"y": 539,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_6",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 330,
+						"y": 270,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_7",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 659,
+						"y": 270,
+						"w": 327,
+						"h": 267
+					}
+				},
+				{
+					"filename": "enemy_8",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 327,
+						"h": 267
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 327,
+						"h": 267
+					},
+					"frame": {
+						"x": 330,
+						"y": 539,
+						"w": 327,
+						"h": 267
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:735ce539668a4239213bd73e462ccbc2:f2e92c9ff8cacc7494f011046aa44f38:9b2a76c8b2a408b3f0547a4eddda1e06$"
+	}
+}

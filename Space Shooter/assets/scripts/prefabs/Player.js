@@ -26,10 +26,14 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(true);
 
         this.scene.events.on('update', this.update, this);
+        this.setAlive(false);
     }
 
     update() {
-        this.autoShoot();
+        if (this.active) {
+            this.move();
+            this.autoShoot();
+        }
     }
 
     autoShoot() {
@@ -52,5 +56,12 @@ export class Player extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(this.velocity);
             this.setFrame('ship_2'); 
         }
+    }
+
+    setAlive(status) {
+        this.body.enable = status;
+        
+        this.setActive(status);
+        this.setVisible(status);
     }
 }

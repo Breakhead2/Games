@@ -4,11 +4,15 @@ import { Player } from "../prefabs/Player.js";
 export class GameScene extends BaseScene {
     constructor() {
         super('Game');
+
+        this.gameOnPause = true;
     }
 
     create() {
         // Создаем фон
         this.createBackground();
+
+        this.createStartText();
         
         // Обновляем состояние звука
         this.updateSoundState();
@@ -39,7 +43,29 @@ export class GameScene extends BaseScene {
 
     update(time, delta) {
         super.update(time, delta);
-        
-        this.player.move();
     }
+
+    createStartText() {
+        this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Press ENTER to start', {
+            fontFamily: 'PressStart2P',
+            fontSize: '18px',
+            color: '#ffffff'
+        }).setOrigin(0.5);
+
+        this.tweens.add({
+            targets: this.startText,
+            alpha: 0,
+            ease: 'Linear',
+            duration: 500,
+            repeat: -1,
+            yoyo: true,
+        })
+
+
+        this.input.keyboard.on('keydown-ENTER', () => {
+            this.player.setAlive(true);
+            this.startText.destroy();
+        })
+    }
+    
 }
