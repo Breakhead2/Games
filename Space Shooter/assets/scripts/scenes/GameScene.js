@@ -1,4 +1,5 @@
 import { BaseScene } from "./BaseScene.js";
+import { Player } from "../prefabs/Player.js";
 
 export class GameScene extends BaseScene {
     constructor() {
@@ -13,8 +14,7 @@ export class GameScene extends BaseScene {
         this.updateSoundState();
         
         // Создаем корабль
-        this.player = this.add.sprite(this.centerX, this.scale.height - 100, 'ship');
-        this.player.setDisplaySize(100, 100);
+        this.player = new Player(this);
         
         // Включаем звук после взаимодействия
         this.enableAudioOnInteraction();
@@ -35,5 +35,11 @@ export class GameScene extends BaseScene {
             this.input.once('pointerdown', enableAudio);
             this.input.keyboard.once('keydown', enableAudio);
         }
+    }
+
+    update(time, delta) {
+        super.update(time, delta);
+        
+        this.player.move();
     }
 }

@@ -6,11 +6,14 @@ export class PreloadScene extends BaseScene {
     }
 
     preload() {
-        this.load.image('ship', './assets/sprites/ship.png');
+        this.load.atlas('ship', './assets/sprites/ship.png', './assets/sprites/ship.json');
+        this.load.atlas('bullets', './assets/sprites/bullets.png', './assets/sprites/bullets.json');
 
         //sounds
         this.load.audio('menu', './assets/sounds/menu.mp3');
         this.load.audio('game', './assets/sounds/game.ogg');
+        this.load.audio('laser_shot', './assets/sounds/laser_shot.ogg');
+
         this.createBackground();
         this.createLoadBar();
     }

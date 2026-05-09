@@ -42,7 +42,8 @@ export class BaseScene extends Phaser.Scene {
             if (this.cache.audio.exists('menu') && this.cache.audio.exists('game')) {
                 const sounds = {
                     menu: this.sound.add('menu', {volume: 1, loop: true}),
-                    game: this.sound.add('game', {volume: 1, loop: true})
+                    game: this.sound.add('game', {volume: 0.8, loop: true}),
+                    laser: this.sound.add('laser_shot', {volume: 0.2})
                 };
                 this.game.registry.set('sounds', sounds);
             }

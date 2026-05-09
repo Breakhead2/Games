@@ -10,6 +10,14 @@ const config = {
     width: 800,
     height: 960,
     parent: 'game-container',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false,
+            gravity: { y: 0},
+            fps: 60
+        }
+    },
     scale: {
         mode: Phaser.Scale.FIT
     },
