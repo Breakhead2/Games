@@ -1,6 +1,6 @@
 export class Bullet extends Phaser.GameObjects.Sprite {
     constructor(scene, source, velocity = 500) {
-        super(scene, source.x, source.y - source.displayHeight / 2, 'bullets', 'bullet_1');
+        super(scene, source.x, source.y - source.displayHeight / 2, 'bullets_2', 'bullet_3');
 
         this.scene = scene;
         this.velocity = velocity;
@@ -15,13 +15,15 @@ export class Bullet extends Phaser.GameObjects.Sprite {
         this.body.enable = false; // Изначально выключено
         this.setVisible(false);
         this.setActive(false);
+
+        this.setAngle(90);
     }
 
     reset(x, y) {
         // Обновляем позицию пули
         this.x = x;
         this.y = y;
-        
+
         // Активируем пулю
         this.isActive = true;
         this.setVisible(true);

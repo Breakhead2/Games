@@ -5,7 +5,7 @@ export class Player extends Phaser.GameObjects.Sprite {
         super(scene, scene.centerX, scene.scale.height - 150, 'ship', 'ship_1');
         this.scene = scene;
         this.velocity = 400;
-        this.shootDelay = 350;
+        this.shootDelay = 100;
         this.canShoot = true;
         this.lastShot = 0;
         this.upgrades = [];
