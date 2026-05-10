@@ -1,180 +1,180 @@
 {
 	"textures": [
 		{
-			"image": "enemies.png",
+			"image": "enemies_1.png?v=7db1a46fbc34",
 			"format": "RGBA8888",
 			"size": {
-				"w": 987,
-				"h": 807
+				"w": 1048,
+				"h": 512
 			},
 			"scale": 1,
 			"frames": [
 				{
 					"filename": "enemy_1",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 14,
+						"y": 13,
+						"w": 300,
+						"h": 240
 					},
 					"frame": {
-						"x": 1,
-						"y": 1,
-						"w": 327,
-						"h": 267
+						"x": 487,
+						"y": 259,
+						"w": 300,
+						"h": 240
 					}
 				},
 				{
 					"filename": "enemy_2",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 37,
+						"y": 3,
+						"w": 248,
+						"h": 259
 					},
 					"frame": {
-						"x": 330,
+						"x": 1,
 						"y": 1,
-						"w": 327,
-						"h": 267
+						"w": 248,
+						"h": 259
 					}
 				},
 				{
 					"filename": "enemy_3",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 18,
+						"y": 23,
+						"w": 290,
+						"h": 227
 					},
 					"frame": {
-						"x": 659,
+						"x": 757,
 						"y": 1,
-						"w": 327,
-						"h": 267
+						"w": 290,
+						"h": 227
 					}
 				},
 				{
 					"filename": "enemy_4",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 39,
+						"y": 11,
+						"w": 252,
+						"h": 247
 					},
 					"frame": {
-						"x": 1,
-						"y": 270,
-						"w": 327,
-						"h": 267
+						"x": 233,
+						"y": 262,
+						"w": 252,
+						"h": 247
 					}
 				},
 				{
 					"filename": "enemy_5",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 30,
+						"y": 36,
+						"w": 258,
+						"h": 189
 					},
 					"frame": {
-						"x": 1,
-						"y": 539,
-						"w": 327,
-						"h": 267
+						"x": 789,
+						"y": 230,
+						"w": 258,
+						"h": 189
 					}
 				},
 				{
 					"filename": "enemy_6",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 38,
+						"y": 7,
+						"w": 244,
+						"h": 230
 					},
 					"frame": {
-						"x": 330,
-						"y": 270,
-						"w": 327,
-						"h": 267
+						"x": 511,
+						"y": 1,
+						"w": 244,
+						"h": 230
 					}
 				},
 				{
 					"filename": "enemy_7",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 35,
+						"y": 8,
+						"w": 258,
+						"h": 256
 					},
 					"frame": {
-						"x": 659,
-						"y": 270,
-						"w": 327,
-						"h": 267
+						"x": 251,
+						"y": 1,
+						"w": 258,
+						"h": 256
 					}
 				},
 				{
 					"filename": "enemy_8",
 					"rotated": false,
-					"trimmed": false,
+					"trimmed": true,
 					"sourceSize": {
 						"w": 327,
 						"h": 267
 					},
 					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 327,
-						"h": 267
+						"x": 44,
+						"y": 6,
+						"w": 230,
+						"h": 249
 					},
 					"frame": {
-						"x": 330,
-						"y": 539,
-						"w": 327,
-						"h": 267
+						"x": 1,
+						"y": 262,
+						"w": 230,
+						"h": 249
 					}
 				}
 			]
@@ -183,6 +183,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:735ce539668a4239213bd73e462ccbc2:f2e92c9ff8cacc7494f011046aa44f38:9b2a76c8b2a408b3f0547a4eddda1e06$"
+		"smartupdate": "$TexturePacker:SmartUpdate:58462458234df0965d108f1b75c3ec25:42f92ac74a160f57241881f30ca4128e:681a6078c520a7a70964c65fa61e3307$"
 	}
 }
