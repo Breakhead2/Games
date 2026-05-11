@@ -10,6 +10,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         this.typeKey = typeKey;
         this.typeData = typeData;
         this.currentHp = typeData.hp;
+        this.score = typeData.score;
         this.enemyInstanceId = null;
         this.isActive = false;
         

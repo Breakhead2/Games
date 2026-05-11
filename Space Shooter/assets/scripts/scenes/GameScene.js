@@ -138,8 +138,15 @@ export class GameScene extends BaseScene {
         });
     }
 
-    addScore(amount) {
-        this.score += amount;
+    addScore(amount, plus = true) {
+        if (plus) {
+            this.score += amount;
+        } else {
+            this.score -= amount;
+        }
+
+        if (this.score < 0) this.score = 0;
+        
         this.scoreText.setText(`SCORE: ${this.score}`);
     }
     
@@ -191,6 +198,8 @@ export class GameScene extends BaseScene {
         
         player.takeDamage(1);
         enemy.takeDamage(1);
+
+        this.addScore(enemy.score, false);
     }
     
     startWave() {
@@ -508,6 +517,8 @@ export class GameScene extends BaseScene {
         
         bullet.deactivate();
         player.takeDamage(1);
+
+        this.addScore(100, false);
     }
 
     cleanup() {
