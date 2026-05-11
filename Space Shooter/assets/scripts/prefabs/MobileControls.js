@@ -1,3 +1,4 @@
+// prefabs/MobileControls.js
 export class MobileControls {
     constructor(scene) {
         this.scene = scene;
@@ -11,7 +12,7 @@ export class MobileControls {
     createControls() {
         const { width, height } = this.scene.scale;
         
-        // Левая зона для движения влево (30% экрана слева)
+        // Левая зона для движения влево
         this.leftZone = this.scene.add.rectangle(width * 0.15, height - 120, width * 0.3, 100, 0x000000, 0.5)
             .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
@@ -21,7 +22,7 @@ export class MobileControls {
             color: '#ffffff'
         }).setOrigin(0.5);
         
-        // Правая зона для движения вправо (30% экрана справа)
+        // Правая зона для движения вправо
         this.rightZone = this.scene.add.rectangle(width * 0.85, height - 120, width * 0.3, 100, 0x000000, 0.5)
             .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
@@ -31,15 +32,15 @@ export class MobileControls {
             color: '#ffffff'
         }).setOrigin(0.5);
         
-        // Кнопка огня (центр снизу)
-        this.fireButton = this.scene.add.circle(width / 2, height - 120, 60, 0xff0000, 0.7)
+        // Кнопка огня
+        this.fireButton = this.scene.add.circle(width / 2, height - 120, 65, 0xff0000, 0.8)
             .setStrokeStyle(3, 0xffffff)
             .setInteractive({ useHandCursor: true });
         
         this.scene.add.text(width / 2, height - 120, 'FIRE', {
-            fontSize: '24px',
+            fontSize: '28px',
             color: '#ffffff',
-            fontFamily: 'monospace',
+            fontFamily: 'PressStart2P',
             fontWeight: 'bold'
         }).setOrigin(0.5);
         
@@ -78,19 +79,17 @@ export class MobileControls {
             this.firePressed = false;
         });
         
-        // Сброс всех флагов при отпускании пальца в любом месте
+        // Сброс флагов
         this.scene.input.on('pointerup', () => {
             this.moveLeftPressed = false;
             this.moveRightPressed = false;
             this.firePressed = false;
         });
         
-        // Визуальный фидбек при нажатии
         this.addButtonFeedback();
     }
     
     addButtonFeedback() {
-        // Эффект нажатия для левой кнопки
         this.leftZone.on('pointerdown', () => {
             this.leftZone.setFillStyle(0x00ff00, 0.8);
             this.scene.time.delayedCall(100, () => {
@@ -98,7 +97,6 @@ export class MobileControls {
             });
         });
         
-        // Эффект нажатия для правой кнопки
         this.rightZone.on('pointerdown', () => {
             this.rightZone.setFillStyle(0x00ff00, 0.8);
             this.scene.time.delayedCall(100, () => {
@@ -106,13 +104,12 @@ export class MobileControls {
             });
         });
         
-        // Эффект нажатия для кнопки огня
         this.fireButton.on('pointerdown', () => {
             this.fireButton.setFillStyle(0xff6600, 0.9);
             this.fireButton.setScale(0.9);
             this.scene.time.delayedCall(100, () => {
                 if (this.fireButton) {
-                    this.fireButton.setFillStyle(0xff0000, 0.7);
+                    this.fireButton.setFillStyle(0xff0000, 0.8);
                     this.fireButton.setScale(1);
                 }
             });
@@ -128,7 +125,7 @@ export class MobileControls {
     
     isFirePressed() {
         const pressed = this.firePressed;
-        this.firePressed = false; // Сбрасываем для одиночного выстрела
+        this.firePressed = false;
         return pressed;
     }
     

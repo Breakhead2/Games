@@ -153,7 +153,6 @@ export class GameScene extends BaseScene {
         // Обновляем текст волны
         this.updateWaveText();
         
-        // Остальной код без изменений...
         this.waveEnemyInstances = [];
         for (let enemyConfig of wave.enemies) {
             const typeKey = enemyConfig.type;
@@ -176,39 +175,30 @@ export class GameScene extends BaseScene {
     handleBulletEnemyCollision(bullet, enemy) {
         if (!bullet.isActive || !enemy.isActive) return;
         
-        // Наносим урон врагу (урон игрока, можно расширить)
-        const damage = this.player.damage; // у игрока damage = 1
+        const damage = this.player.damage;
         enemy.takeDamage(damage);
-        
-        // Деактивируем пулю
         bullet.disable();
     }
 
     handlePlayerEnemyCollision(player, enemy) {
-        // Если игрок неуязвим, не обрабатываем столкновение
         if (player.invincible) return;
         if (!player.active || !enemy.isActive) return;
         
-        // Небольшой эффект в месте столкновения
         const explosion = this.add.sprite((player.x + enemy.x) / 2, (player.y + enemy.y) / 2, 'explosion');
         explosion.setScale(0.3);
         explosion.play('explode');
         explosion.on('animationcomplete', () => explosion.destroy());
         
-        // Наносим урон игроку
         player.takeDamage(1);
-        
-        // Враг также получает урон (можно убрать или оставить)
-        enemy.takeDamage(1);  // РАСКОММЕНТИРУЙТЕ, ЕСЛИ НУЖНО, ЧТОБЫ ВРАГ ТОЖЕ УМИРАЛ
+        enemy.takeDamage(1);
     }
     
     startWave() {
-        if (this.gameOnPause) return; // ждём Enter
+        if (this.gameOnPause) return;
         
         const wave = Waves[this.currentWaveIndex];
         if (!wave) return;
         
-        // Запускаем таймер спавна
         this.spawnTimer = this.time.addEvent({
             delay: wave.spawnDelay,
             callback: () => this.spawnNextEnemy(),
@@ -219,11 +209,9 @@ export class GameScene extends BaseScene {
     
     spawnNextEnemy() {
         if (this.spawnQueue.length === 0) {
-            // Все враги уже появились (или ждут возврата)
             return;
         }
         
-        // Находим следующего живого врага в очереди
         let nextId = null;
         while (this.spawnQueue.length > 0) {
             const candidateId = this.spawnQueue.shift();
@@ -239,13 +227,11 @@ export class GameScene extends BaseScene {
         const instance = this.waveEnemyInstances.find(e => e.id === nextId);
         const freeEnemy = this.enemiesPool.getFreeEnemy();
         
-        // Настроить спрайт под тип врага
         const typeData = EnemyTypes[instance.typeKey];
         freeEnemy.typeKey = instance.typeKey;
         freeEnemy.typeData = typeData;
         freeEnemy.setTexture('enemies', typeData.frame);
         
-        // Случайная позиция сверху
         const x = Phaser.Math.Between(50, this.scale.width - 50);
         const y = -40;
         
@@ -253,29 +239,20 @@ export class GameScene extends BaseScene {
         this.activeEnemies.set(instance.id, freeEnemy);
     }
     
-    // Вызывается, когда враг улетел за экран (не убит)
     onEnemyExitScreen(enemySprite) {
-        // Найти соответствующий экземпляр
         const instance = this.waveEnemyInstances.find(e => e.id === enemySprite.enemyInstanceId);
         if (!instance || !instance.isAlive) return;
         
-        // Удалить из активных
         this.activeEnemies.delete(instance.id);
-        
-        // Вернуть спрайт в пул
         this.enemiesPool.returnToPool(enemySprite);
         
-        // Вернуть этого врага в конец очереди спавна, чтобы он зашёл на второй круг
-        // Только если он ещё жив (HP > 0)
         if (instance.currentHp > 0) {
             this.spawnQueue.push(instance.id);
         } else {
-            // На всякий случай, если HP = 0, но isAlive ещё true - убьём
             if (instance.isAlive) this.onEnemyKilled(enemySprite);
         }
     }
     
-    // Вызывается, когда враг окончательно убит (лазером)
     onEnemyKilled(enemySprite) {
         const instance = this.waveEnemyInstances.find(e => e.id === enemySprite.enemyInstanceId);
         if (!instance || !instance.isAlive) return;
@@ -283,24 +260,16 @@ export class GameScene extends BaseScene {
         instance.isAlive = false;
         this.totalAlive--;
         
-        // Удалить из активных
         this.activeEnemies.delete(instance.id);
-        
-        // Добавить очки
         this.addScore(enemySprite.typeData.score);
         
-        // Воспроизвести звук взрыва
         const sounds = this.game.registry.get('sounds');
         const soundEnabled = this.game.registry.get('soundEnabled');
         if (soundEnabled !== false && sounds && sounds.explosion) {
             sounds.explosion.play();
         }
         
-        // Анимация взрыва
         this.createExplosion(enemySprite.x, enemySprite.y);
-        
-        // Спрайт врага будет уничтожен в enemy.destroy(), который вызывается в takeDamage
-        // Но мы его уже удалили из activeEnemies, и он сам вызовет destroy().
         this.checkWaveComplete();
     }
     
@@ -313,7 +282,6 @@ export class GameScene extends BaseScene {
                     this.gameFinished = true;
                     this.showGameComplete();
                 } else {
-                    // Показываем анимацию перехода
                     this.showWaveTransition(this.currentWaveIndex + 1, () => {
                         this.prepareWave();
                         if (!this.gameOnPause) this.startWave();
@@ -365,27 +333,22 @@ export class GameScene extends BaseScene {
             });
             
             this.time.delayedCall(5000, () => {
-                this.cleanup();  // Очищаем все объекты
+                this.cleanup();
                 this.goToMenuScene();
             });
         });
     }
 
     showWaveTransition(waveNumber, onComplete) {
-        // Отключаем управление и стрельбу
         this.player.disableControls();
-        
-        // Запускаем полёт корабля вверх
         this.player.flyAway();
         
-        // Показываем текст волны
         const waveText = this.add.text(this.scale.width / 2, this.scale.height / 2, `WAVE ${waveNumber}`, {
             fontFamily: 'PressStart2P',
             fontSize: '48px',
             color: '#ffff00'
         }).setOrigin(0.5);
         
-        // Анимация текста
         this.tweens.add({
             targets: waveText,
             alpha: 0,
@@ -397,13 +360,9 @@ export class GameScene extends BaseScene {
             }
         });
         
-        // Ждём, пока корабль улетит и вернём его
         this.time.delayedCall(3000, () => {
-            // Возвращаем корабль в исходную позицию
             this.player.resetPosition();
-            // Включаем управление
             this.player.enableControls();
-            // Вызываем колбэк
             if (onComplete) onComplete();
         });
     }
@@ -413,19 +372,18 @@ export class GameScene extends BaseScene {
             this.anims.create({
                 key: 'explode',
                 frames: this.anims.generateFrameNames('explosion', {
-                    start: 1,      // начальный кадр
-                    end: 10,        // конечный кадр (подставьте количество кадров из вашего атласа)
-                    prefix: 'explosion_' // префикс имени кадра, например 'frame1', 'frame2'
+                    start: 1,
+                    end: 10,
+                    prefix: 'explosion_'
                 }),
                 frameRate: 15,
-                repeat: 0,         // не повторять
+                repeat: 0,
                 hideOnComplete: true
             });
         }
     }
 
     createExplosion(x, y) {
-        // Убираем третий аргумент (начальный кадр) – пусть берётся первый из атласа
         const explosion = this.add.sprite(x, y, 'explosion');
         explosion.setScale(0.5);
         explosion.play('explode');
@@ -436,46 +394,71 @@ export class GameScene extends BaseScene {
         super.update(time, delta);
         
         if (!this.gameOnPause) {
-            // Обновить активных врагов
             for (let [id, enemy] of this.activeEnemies) {
                 if (enemy.isActive) enemy.update();
             }
-            // Обновить пули врагов
             this.enemyBullets.update();
         }
     }
     
     createStartText() {
-        // Определяем, мобильное ли устройство
         const isMobile = this.isMobile();
         
-        // Разный текст для ПК и мобильных
-        const startText = isMobile ? 'TAP TO START' : 'PRESS ENTER TO START';
+        this.startButton = null;
         
-        this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, startText, {
-            fontFamily: 'PressStart2P',
-            fontSize: isMobile ? '24px' : '18px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-        
-        this.tweens.add({
-            targets: this.startText,
-            alpha: 0,
-            ease: 'Linear',
-            duration: 500,
-            repeat: -1,
-            yoyo: true,
-        });
-        
-        // Для мобильных устройств - нажатие на экран
         if (isMobile) {
-            // Используем pointerdown на всей сцене
-            this.input.once('pointerdown', () => {
+            this.startButton = this.add.circle(this.scale.width / 2, this.scale.height / 2, 100, 0xff0000, 0.8)
+                .setStrokeStyle(4, 0xffffff)
+                .setInteractive({ useHandCursor: true });
+            
+            this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'FIRE', {
+                fontFamily: 'PressStart2P',
+                fontSize: '32px',
+                color: '#ffffff'
+            }).setOrigin(0.5);
+            
+            this.tapText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 120, 'TAP TO START', {
+                fontFamily: 'PressStart2P',
+                fontSize: '20px',
+                color: '#ffff00'
+            }).setOrigin(0.5);
+            
+            this.tweens.add({
+                targets: this.startButton,
+                scaleX: 1.1,
+                scaleY: 1.1,
+                duration: 500,
+                yoyo: true,
+                repeat: -1
+            });
+            
+            this.tweens.add({
+                targets: this.tapText,
+                alpha: 0,
+                duration: 500,
+                yoyo: true,
+                repeat: -1
+            });
+            
+            this.startButton.once('pointerdown', () => {
                 this.startGame();
             });
-        } 
-        // Для ПК - клавиша Enter
-        else {
+        } else {
+            this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'PRESS ENTER TO START', {
+                fontFamily: 'PressStart2P',
+                fontSize: '18px',
+                color: '#ffffff'
+            }).setOrigin(0.5);
+            
+            this.tweens.add({
+                targets: this.startText,
+                alpha: 0,
+                ease: 'Linear',
+                duration: 500,
+                repeat: -1,
+                yoyo: true,
+            });
+            
             this.input.keyboard.once('keydown-ENTER', () => {
                 this.startGame();
             });
@@ -485,28 +468,28 @@ export class GameScene extends BaseScene {
     startGame() {
         if (this.gameOnPause) {
             this.gameOnPause = false;
-            
-            // Пересоздаём UI
             this.recreateUI();
-            
-            // Сбрасываем жизни и активируем игрока
             this.player.resetLives();
             this.player.setAlive(true);
             
-            // Уничтожаем стартовый текст
             if (this.startText) {
                 this.startText.destroy();
                 this.startText = null;
             }
+            if (this.startButton) {
+                this.startButton.destroy();
+                this.startButton = null;
+            }
+            if (this.tapText) {
+                this.tapText.destroy();
+                this.tapText = null;
+            }
             
-            // Запускаем волну
             this.startWave();
         }
     }
 
-    // НОВЫЙ МЕТОД: пересоздаёт UI после очистки
     recreateUI() {
-        // Удаляем старые элементы, если они есть
         if (this.scoreText) {
             this.scoreText.destroy();
             this.scoreText = null;
@@ -524,14 +507,10 @@ export class GameScene extends BaseScene {
             this.livesContainer = null;
         }
         
-        // Создаём заново
         this.createScoreText();
         this.createWaveText();
-        this.createLivesDisplay(); // теперь livesContainer создаётся заново
-        
-        // Обновляем отображение
+        this.createLivesDisplay();
         this.updateWaveText();
-        // updateLivesDisplay вызывается внутри createLivesDisplay, но для уверенности:
         this.updateLivesDisplay();
     }
     
@@ -543,7 +522,7 @@ export class GameScene extends BaseScene {
     }
 
     handlePlayerHit(player, bullet) {
-        if (player.invincible) return;  // УЖЕ ЕСТЬ
+        if (player.invincible) return;
         if (!bullet.isActive || !player.active) return;
         
         bullet.deactivate();
@@ -551,13 +530,11 @@ export class GameScene extends BaseScene {
     }
 
     cleanup() {
-        // Останавливаем таймер спавна
         if (this.spawnTimer) {
             this.spawnTimer.destroy();
             this.spawnTimer = null;
         }
         
-        // Деактивируем всех активных врагов
         for (let [id, enemy] of this.activeEnemies) {
             if (enemy && enemy.isActive) {
                 enemy.deactivate();
@@ -565,32 +542,27 @@ export class GameScene extends BaseScene {
         }
         this.activeEnemies.clear();
         
-        // Очищаем пул врагов
         if (this.enemiesPool) {
             this.enemiesPool.getChildren().forEach(enemy => {
                 if (enemy) enemy.deactivate();
             });
         }
         
-        // Очищаем пули врагов
         if (this.enemyBullets) {
             this.enemyBullets.getChildren().forEach(bullet => {
                 if (bullet && bullet.isActive) bullet.deactivate();
             });
         }
         
-        // Очищаем пули игрока
         if (this.player && this.player.bullets) {
             this.player.bullets.getChildren().forEach(bullet => {
                 if (bullet && bullet.isActive) bullet.disable();
             });
         }
         
-        // Очищаем очереди
         this.waveEnemyInstances = [];
         this.spawnQueue = [];
         
-        // Сбрасываем состояние
         this.gameOnPause = true;
         this.currentWaveIndex = 0;
         this.score = 0;
@@ -610,7 +582,6 @@ export class GameScene extends BaseScene {
         
         const { width, height } = this.scale;
         
-        // Обновляем позиции кнопок при изменении размера экрана
         if (this.player && this.player.mobileControls) {
             const controls = this.player.mobileControls;
             if (controls.leftZone) {
