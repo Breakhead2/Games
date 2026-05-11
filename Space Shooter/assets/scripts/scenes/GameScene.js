@@ -406,31 +406,12 @@ export class GameScene extends BaseScene {
         
         this.startButton = null;
         
-        if (isMobile) {
-            this.startButton = this.add.circle(this.scale.width / 2, this.scale.height / 2, 100, 0xff0000, 0.8)
-                .setStrokeStyle(4, 0xffffff)
-                .setInteractive({ useHandCursor: true });
-            
-            this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'FIRE', {
-                fontFamily: 'PressStart2P',
-                fontSize: '32px',
-                color: '#ffffff'
-            }).setOrigin(0.5);
-            
+        if (isMobile) { 
             this.tapText = this.add.text(this.scale.width / 2, this.scale.height / 2 - 120, 'TAP TO START', {
                 fontFamily: 'PressStart2P',
                 fontSize: '20px',
                 color: '#ffff00'
             }).setOrigin(0.5);
-            
-            this.tweens.add({
-                targets: this.startButton,
-                scaleX: 1.1,
-                scaleY: 1.1,
-                duration: 500,
-                yoyo: true,
-                repeat: -1
-            });
             
             this.tweens.add({
                 targets: this.tapText,
@@ -440,7 +421,7 @@ export class GameScene extends BaseScene {
                 repeat: -1
             });
             
-            this.startButton.once('pointerdown', () => {
+            this.input.once('pointerdown', () => {
                 this.startGame();
             });
         } else {
