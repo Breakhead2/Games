@@ -13,7 +13,7 @@ export class MobileControls {
         const { width, height } = this.scene.scale;
         
         // Левая зона для движения влево
-        this.leftZone = this.scene.add.rectangle(width * 0.15, height - 120, width * 0.3, 100, 0x000000, 0.5)
+        this.leftZone = this.scene.add.rectangle(width * 0.15, height, width * 0.3, 100, 0x000000, 0.5)
             .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
         
@@ -23,7 +23,7 @@ export class MobileControls {
         }).setOrigin(0.5);
         
         // Правая зона для движения вправо
-        this.rightZone = this.scene.add.rectangle(width * 0.85, height - 120, width * 0.3, 100, 0x000000, 0.5)
+        this.rightZone = this.scene.add.rectangle(width * 0.85, height, width * 0.3, 100, 0x000000, 0.5)
             .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
         
@@ -33,11 +33,11 @@ export class MobileControls {
         }).setOrigin(0.5);
         
         // Кнопка огня
-        this.fireButton = this.scene.add.circle(width / 2, height - 120, 65, 0xff0000, 0.8)
+        this.fireButton = this.scene.add.circle(width / 2, height, 65, 0xff0000, 0.8)
             .setStrokeStyle(3, 0xffffff)
             .setInteractive({ useHandCursor: true });
         
-        this.scene.add.text(width / 2, height - 120, 'FIRE', {
+        this.scene.add.text(width / 2, height, 'FIRE', {
             fontSize: '28px',
             color: '#ffffff',
             fontFamily: 'PressStart2P',

@@ -20,6 +20,10 @@ export class Player extends Phaser.GameObjects.Sprite {
     }
 
     init() {
+        if (this.scene.isMobile) {
+            this.x -= 100;
+        }
+        
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         this.body.enable = true;
