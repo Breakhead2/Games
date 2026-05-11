@@ -576,5 +576,9 @@ export class GameScene extends BaseScene {
         this.waveText = null;
         this.livesText = null;
         this.livesContainer = null;
+
+        if (this.player && this.player.mobileControls) {
+            this.player.mobileControls.destroy();
+        }
     }
 }

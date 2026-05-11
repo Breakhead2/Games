@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
+    touch-action: manipulation;
 }
 
 @font-face {
@@ -15,10 +17,6 @@
     left: -100px;
 }
 
-body {
-    font-family: 'Press Start 2P', monospace;
-}
-
 html,
 body {
     width: 100%;
@@ -28,9 +26,11 @@ body {
 }
 
 body {
+    font-family: 'Press Start 2P', monospace;
     display: flex;
     justify-content: center;
     align-items: center;
+    touch-action: manipulation;
 }
 
 #game-container {
@@ -38,11 +38,14 @@ body {
     justify-content: center;
     align-items: center;
 
+    touch-action: manipulation;
+
     width: 100vw;
     height: 100vh;
 }
 
 canvas {
+    touch-action: manipulation;
     display: block !important;
     margin: 0 auto !important;
     image-rendering: pixelated;
