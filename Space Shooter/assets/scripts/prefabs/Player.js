@@ -20,7 +20,7 @@ export class Player extends Phaser.GameObjects.Sprite {
     }
 
     init() {
-        if (this.scene.isMobile) {
+        if (this.scene.isMobile()) {
             this.y -= 200;
         }
         
@@ -203,7 +203,7 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.controlsEnabled = true;
         this.shootingEnabled = true;
 
-        if (this.scene.isMobile) {
+        if (this.scene.isMobile()) {
             this.y -= 200;
         }
     }
