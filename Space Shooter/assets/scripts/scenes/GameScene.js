@@ -5,6 +5,7 @@ import { Waves } from "../config/waves.js";
 import { Enemies } from "../prefabs/Enemies.js";
 import { EnemyTypes } from "../config/enemyTypes.js";
 import { EnemyBullets } from "../prefabs/EnemyBullets.js";
+import { MobileControls } from "../prefabs/MobileControls.js";
 
 export class GameScene extends BaseScene {
     constructor() {
@@ -24,7 +25,6 @@ export class GameScene extends BaseScene {
     
     create() {
         this.createBackground();
-        this.scale.on('resize', this.resizeMobileControls, this);
         this.createExplodeAnim();
         this.createStartText();
         this.updateSoundState();
@@ -47,12 +47,12 @@ export class GameScene extends BaseScene {
         this.prepareWave();
 
         // КОЛЛИЗИИ
-        // Пули игрока с врагами
         this.physics.add.overlap(this.player.bullets, this.enemiesPool, this.handleBulletEnemyCollision, null, this);
-        // Пули врагов с игроком
         this.physics.add.overlap(this.player, this.enemyBullets, this.handlePlayerHit, null, this);
-        // НОВАЯ КОЛЛИЗИЯ: игрок с врагами
         this.physics.add.overlap(this.player, this.enemiesPool, this.handlePlayerEnemyCollision, null, this);
+        
+        // Добавляем обработчик изменения размера
+        this.scale.on('resize', this.resizeMobileControls, this);
     }
 
     createScoreText() {
@@ -469,6 +469,7 @@ export class GameScene extends BaseScene {
         
         // Для мобильных устройств - нажатие на экран
         if (isMobile) {
+            // Используем pointerdown на всей сцене
             this.input.once('pointerdown', () => {
                 this.startGame();
             });
