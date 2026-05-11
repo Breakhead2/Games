@@ -1,0 +1,78 @@
+{
+	"textures": [
+		{
+			"image": "bullets.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 285,
+				"h": 68
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "bullet_1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 95,
+						"h": 68
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 95,
+						"h": 68
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 95,
+						"h": 68
+					}
+				},
+				{
+					"filename": "bullet_2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 95,
+						"h": 68
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 95,
+						"h": 68
+					},
+					"frame": {
+						"x": 95,
+						"y": 0,
+						"w": 68,
+						"h": 68
+					}
+				},
+				{
+					"filename": "bullet_3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 95,
+						"h": 68
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 95,
+						"h": 68
+					},
+					"frame": {
+						"x": 190,
+						"y": 0,
+						"w": 95,
+						"h": 68
+					}
+				}
+			]
+		}
+	]
+}
