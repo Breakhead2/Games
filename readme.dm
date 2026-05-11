@@ -20,4 +20,4 @@ link: https://breakhead2.github.io/Games/Memory/
 link: https://breakhead2.github.io/Games/Dragon/
 
 #Space_Shooter
-link: https://breakhead2.github.io/Games/Space_Shooter/
+link: https://breakhead2.github.io/Games/Space%20Shooter/
