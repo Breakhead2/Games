@@ -202,6 +202,10 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.invincible = false;  // <-- СБРАСЫВАЕМ ФЛАГ
         this.controlsEnabled = true;
         this.shootingEnabled = true;
+
+        if (this.scene.isMobile) {
+            this.y -= 200;
+        }
     }
 
     setAlive(status) {
