@@ -24,6 +24,7 @@ export class GameScene extends BaseScene {
     
     create() {
         this.createBackground();
+        this.scale.on('resize', this.resizeMobileControls, this);
         this.createExplodeAnim();
         this.createStartText();
         this.updateSoundState();
@@ -445,9 +446,15 @@ export class GameScene extends BaseScene {
     }
     
     createStartText() {
-        this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Press ENTER to start', {
+        // Определяем, мобильное ли устройство
+        const isMobile = this.isMobile();
+        
+        // Разный текст для ПК и мобильных
+        const startText = isMobile ? 'TAP TO START' : 'PRESS ENTER TO START';
+        
+        this.startText = this.add.text(this.scale.width / 2, this.scale.height / 2, startText, {
             fontFamily: 'PressStart2P',
-            fontSize: '18px',
+            fontSize: isMobile ? '24px' : '18px',
             color: '#ffffff'
         }).setOrigin(0.5);
         
@@ -460,25 +467,40 @@ export class GameScene extends BaseScene {
             yoyo: true,
         });
         
-        // once вместо on - сработает только один раз
-        this.input.keyboard.once('keydown-ENTER', () => {
-            if (this.gameOnPause) {
-                this.gameOnPause = false;
-                
-                // СНАЧАЛА пересоздаём UI
-                this.recreateUI();
-                
-                // ПОТОМ сбрасываем жизни и активируем игрока
-                this.player.resetLives();
-                this.player.setAlive(true);
-                
-                // Уничтожаем стартовый текст
-                if (this.startText) this.startText.destroy();
-                
-                // Запускаем волну
-                this.startWave();
+        // Для мобильных устройств - нажатие на экран
+        if (isMobile) {
+            this.input.once('pointerdown', () => {
+                this.startGame();
+            });
+        } 
+        // Для ПК - клавиша Enter
+        else {
+            this.input.keyboard.once('keydown-ENTER', () => {
+                this.startGame();
+            });
+        }
+    }
+
+    startGame() {
+        if (this.gameOnPause) {
+            this.gameOnPause = false;
+            
+            // Пересоздаём UI
+            this.recreateUI();
+            
+            // Сбрасываем жизни и активируем игрока
+            this.player.resetLives();
+            this.player.setAlive(true);
+            
+            // Уничтожаем стартовый текст
+            if (this.startText) {
+                this.startText.destroy();
+                this.startText = null;
             }
-        });
+            
+            // Запускаем волну
+            this.startWave();
+        }
     }
 
     // НОВЫЙ МЕТОД: пересоздаёт UI после очистки
@@ -579,6 +601,28 @@ export class GameScene extends BaseScene {
 
         if (this.player && this.player.mobileControls) {
             this.player.mobileControls.destroy();
+        }
+    }
+
+    resizeMobileControls() {
+        if (!this.isMobile()) return;
+        
+        const { width, height } = this.scale;
+        
+        // Обновляем позиции кнопок при изменении размера экрана
+        if (this.player && this.player.mobileControls) {
+            const controls = this.player.mobileControls;
+            if (controls.leftZone) {
+                controls.leftZone.setPosition(width * 0.15, height - 120);
+                controls.leftZone.setSize(width * 0.3, 100);
+            }
+            if (controls.rightZone) {
+                controls.rightZone.setPosition(width * 0.85, height - 120);
+                controls.rightZone.setSize(width * 0.3, 100);
+            }
+            if (controls.fireButton) {
+                controls.fireButton.setPosition(width / 2, height - 120);
+            }
         }
     }
 }

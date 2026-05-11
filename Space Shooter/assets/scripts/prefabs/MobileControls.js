@@ -1,104 +1,140 @@
 export class MobileControls {
     constructor(scene) {
         this.scene = scene;
-        this.buttons = {};
-        
-        // Определяем, мобильное ли устройство
         this.isMobile = scene.isMobile();
         
         if (this.isMobile) {
-            this.createButtons();
+            this.createControls();
         }
     }
     
-    createButtons() {
+    createControls() {
         const { width, height } = this.scene.scale;
         
-        // Левая кнопка (движение влево)
-        this.buttons.left = this.scene.add.rectangle(80, height - 80, 100, 100, 0x000000, 0.5)
-            .setStrokeStyle(2, 0xffffff)
+        // Левая зона для движения влево (30% экрана слева)
+        this.leftZone = this.scene.add.rectangle(width * 0.15, height - 120, width * 0.3, 100, 0x000000, 0.5)
+            .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
         
-        this.scene.add.text(80, height - 80, '←', {
+        this.scene.add.text(width * 0.15, height - 120, '◀', {
             fontSize: '48px',
             color: '#ffffff'
         }).setOrigin(0.5);
         
-        // Правая кнопка (движение вправо)
-        this.buttons.right = this.scene.add.rectangle(width - 80, height - 80, 100, 100, 0x000000, 0.5)
-            .setStrokeStyle(2, 0xffffff)
+        // Правая зона для движения вправо (30% экрана справа)
+        this.rightZone = this.scene.add.rectangle(width * 0.85, height - 120, width * 0.3, 100, 0x000000, 0.5)
+            .setStrokeStyle(2, 0x00ff00)
             .setInteractive({ useHandCursor: true });
         
-        this.scene.add.text(width - 80, height - 80, '→', {
+        this.scene.add.text(width * 0.85, height - 120, '▶', {
             fontSize: '48px',
             color: '#ffffff'
         }).setOrigin(0.5);
         
-        // Кнопка стрельбы
-        this.buttons.shoot = this.scene.add.rectangle(width / 2, height - 80, 120, 100, 0x000000, 0.5)
-            .setStrokeStyle(2, 0xffffff)
+        // Кнопка огня (центр снизу)
+        this.fireButton = this.scene.add.circle(width / 2, height - 120, 60, 0xff0000, 0.7)
+            .setStrokeStyle(3, 0xffffff)
             .setInteractive({ useHandCursor: true });
         
-        this.scene.add.text(width / 2, height - 80, 'FIRE', {
-            fontSize: '32px',
+        this.scene.add.text(width / 2, height - 120, 'FIRE', {
+            fontSize: '24px',
             color: '#ffffff',
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
+            fontWeight: 'bold'
         }).setOrigin(0.5);
         
-        // Настройка событий для левой кнопки
-        this.buttons.left.on('pointerdown', () => {
-            this.moveLeft = true;
+        // Флаги состояния
+        this.moveLeftPressed = false;
+        this.moveRightPressed = false;
+        this.firePressed = false;
+        
+        // События для левой зоны
+        this.leftZone.on('pointerdown', () => {
+            this.moveLeftPressed = true;
         });
-        this.buttons.left.on('pointerup', () => {
-            this.moveLeft = false;
+        this.leftZone.on('pointerup', () => {
+            this.moveLeftPressed = false;
         });
-        this.buttons.left.on('pointerout', () => {
-            this.moveLeft = false;
+        this.leftZone.on('pointerout', () => {
+            this.moveLeftPressed = false;
         });
         
-        // Настройка событий для правой кнопки
-        this.buttons.right.on('pointerdown', () => {
-            this.moveRight = true;
+        // События для правой зоны
+        this.rightZone.on('pointerdown', () => {
+            this.moveRightPressed = true;
         });
-        this.buttons.right.on('pointerup', () => {
-            this.moveRight = false;
+        this.rightZone.on('pointerup', () => {
+            this.moveRightPressed = false;
         });
-        this.buttons.right.on('pointerout', () => {
-            this.moveRight = false;
-        });
-        
-        // Настройка событий для стрельбы
-        this.buttons.shoot.on('pointerdown', () => {
-            this.shootPressed = true;
-        });
-        this.buttons.shoot.on('pointerup', () => {
-            this.shootPressed = false;
+        this.rightZone.on('pointerout', () => {
+            this.moveRightPressed = false;
         });
         
-        // Добавляем обработчики для отмены при перетаскивании
+        // События для кнопки огня
+        this.fireButton.on('pointerdown', () => {
+            this.firePressed = true;
+        });
+        this.fireButton.on('pointerup', () => {
+            this.firePressed = false;
+        });
+        
+        // Сброс всех флагов при отпускании пальца в любом месте
         this.scene.input.on('pointerup', () => {
-            this.moveLeft = false;
-            this.moveRight = false;
-            this.shootPressed = false;
+            this.moveLeftPressed = false;
+            this.moveRightPressed = false;
+            this.firePressed = false;
+        });
+        
+        // Визуальный фидбек при нажатии
+        this.addButtonFeedback();
+    }
+    
+    addButtonFeedback() {
+        // Эффект нажатия для левой кнопки
+        this.leftZone.on('pointerdown', () => {
+            this.leftZone.setFillStyle(0x00ff00, 0.8);
+            this.scene.time.delayedCall(100, () => {
+                if (this.leftZone) this.leftZone.setFillStyle(0x000000, 0.5);
+            });
+        });
+        
+        // Эффект нажатия для правой кнопки
+        this.rightZone.on('pointerdown', () => {
+            this.rightZone.setFillStyle(0x00ff00, 0.8);
+            this.scene.time.delayedCall(100, () => {
+                if (this.rightZone) this.rightZone.setFillStyle(0x000000, 0.5);
+            });
+        });
+        
+        // Эффект нажатия для кнопки огня
+        this.fireButton.on('pointerdown', () => {
+            this.fireButton.setFillStyle(0xff6600, 0.9);
+            this.fireButton.setScale(0.9);
+            this.scene.time.delayedCall(100, () => {
+                if (this.fireButton) {
+                    this.fireButton.setFillStyle(0xff0000, 0.7);
+                    this.fireButton.setScale(1);
+                }
+            });
         });
     }
     
     getMovement() {
         let direction = 0;
-        if (this.moveLeft) direction = -1;
-        if (this.moveRight) direction = 1;
+        if (this.moveLeftPressed) direction = -1;
+        if (this.moveRightPressed) direction = 1;
         return direction;
     }
     
-    isShooting() {
-        const shooting = this.shootPressed;
-        this.shootPressed = false; // Одиночный выстрел
-        return shooting;
+    isFirePressed() {
+        const pressed = this.firePressed;
+        this.firePressed = false; // Сбрасываем для одиночного выстрела
+        return pressed;
     }
     
     destroy() {
-        if (this.buttons.left) this.buttons.left.destroy();
-        if (this.buttons.right) this.buttons.right.destroy();
-        if (this.buttons.shoot) this.buttons.shoot.destroy();
+        if (this.leftZone) this.leftZone.destroy();
+        if (this.rightZone) this.rightZone.destroy();
+        if (this.fireButton) this.fireButton.destroy();
     }
 }

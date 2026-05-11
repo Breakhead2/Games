@@ -3,22 +3,21 @@ import { MobileControls } from "./MobileControls.js";
 
 export class Player extends Phaser.GameObjects.Sprite {
     constructor(scene) {
-            super(scene, scene.centerX, scene.scale.height - 150, 'ship', 'ship_1');
-            this.scene = scene;
-            this.velocity = 400;
-            this.shootDelay = 200;
-            this.lastShot = 0;
-            this.upgrades = [];
-            this.damage = 1;
-            this.controlsEnabled = true;
-            this.shootingEnabled = true;
-            this.invincible = false;
-            this.hp = 3;
-            this.maxHp = 3;
-            this.mobileDirection = 0; // -1 влево, 1 вправо, 0 нет
-            
-            this.init();
-        }
+        super(scene, scene.centerX, scene.scale.height - 150, 'ship', 'ship_1');
+        this.scene = scene;
+        this.velocity = 400;
+        this.shootDelay = 200;
+        this.lastShot = 0;
+        this.upgrades = [];
+        this.damage = 1;
+        this.controlsEnabled = true;
+        this.shootingEnabled = true;
+        this.invincible = false;
+        this.hp = 3;
+        this.maxHp = 3;
+        
+        this.init();
+    }
 
     init() {
         this.scene.add.existing(this);
@@ -34,16 +33,8 @@ export class Player extends Phaser.GameObjects.Sprite {
         // Клавиатура для ПК
         this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         
-        // Мобильные кнопки
+        // Мобильные кнопки (только если устройство мобильное)
         this.mobileControls = new MobileControls(this.scene);
-        
-        // Добавляем обработчик нажатия экрана для стрельбы (альтернативный вариант)
-        this.scene.input.on('pointerdown', (pointer) => {
-            // Если нажали на правую половину экрана - стреляем
-            if (pointer.x > this.scene.scale.width / 2 && !this.mobileControls.shootPressed) {
-                this.mobileShoot = true;
-            }
-        });
 
         this.scene.events.on('update', this.update, this);
         this.setAlive(false);
@@ -61,11 +52,15 @@ export class Player extends Phaser.GameObjects.Sprite {
     }
 
     manualShoot() {
-        // Стрельба с клавиатуры
-        let shoot = Phaser.Input.Keyboard.JustDown(this.spaceKey);
+        let shoot = false;
         
-        // Стрельба с сенсора
-        if (this.mobileControls && this.mobileControls.isShooting()) {
+        // Стрельба с клавиатуры (ПК)
+        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+            shoot = true;
+        }
+        
+        // Стрельба с мобильной кнопки
+        if (this.mobileControls && this.mobileControls.isMobile && this.mobileControls.isFirePressed()) {
             shoot = true;
         }
         
@@ -82,11 +77,18 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(0);
         this.setFrame('ship_1');
         
-        // Движение с клавиатуры
-        let moveLeft = this.scene.cursors.left.isDown;
-        let moveRight = this.scene.cursors.right.isDown;
+        let moveLeft = false;
+        let moveRight = false;
         
-        // Движение с сенсора (если есть мобильные кнопки)
+        // Движение с клавиатуры (ПК)
+        if (this.scene.cursors.left.isDown) {
+            moveLeft = true;
+        }
+        if (this.scene.cursors.right.isDown) {
+            moveRight = true;
+        }
+        
+        // Движение с мобильных кнопок (если они есть и устройство мобильное)
         if (this.mobileControls && this.mobileControls.isMobile) {
             const direction = this.mobileControls.getMovement();
             if (direction === -1) {
@@ -95,9 +97,6 @@ export class Player extends Phaser.GameObjects.Sprite {
             } else if (direction === 1) {
                 moveLeft = false;
                 moveRight = true;
-            } else {
-                moveLeft = false;
-                moveRight = false;
             }
         }
         
