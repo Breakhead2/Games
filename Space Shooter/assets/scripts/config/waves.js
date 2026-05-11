@@ -1,20 +1,20 @@
 export const Waves = [
     {
         enemies: [
-            { type: 'soldier1', count: 5 },
-            { type: 'soldier2', count: 3 }
+            { type: 'soldier1', count: 10 },
+            { type: 'soldier2', count: 5 }
         ],
-        enemiesCount: 8,
-        spawnDelay: 1500,
+        enemiesCount: 15,
+        spawnDelay: 1200,
         waveCompleteDelay: 2000
     },
     { 
         enemies: [
-            { type: 'soldier1', count: 4 },
-            { type: 'soldier2', count: 4 },
-            { type: 'scout1', count: 4 }
+            { type: 'soldier1', count: 10 },
+            { type: 'soldier2', count: 5 },
+            { type: 'scout1', count: 5 }
         ],
-        enemiesCount: 12,
+        enemiesCount: 33,
         spawnDelay: 1200,
         waveCompleteDelay: 2000
     }

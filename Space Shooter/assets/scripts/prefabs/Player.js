@@ -5,10 +5,15 @@ export class Player extends Phaser.GameObjects.Sprite {
         super(scene, scene.centerX, scene.scale.height - 150, 'ship', 'ship_1');
         this.scene = scene;
         this.velocity = 400;
-        this.shootDelay = 100;
-        this.canShoot = true;
+        this.shootDelay = 200;
         this.lastShot = 0;
         this.upgrades = [];
+        this.damage = 1;
+        this.controlsEnabled = true;
+        this.shootingEnabled = true;
+        this.invincible = false;  // <-- ДОБАВИТЬ ЭТОТ ФЛАГ
+        this.hp = 3;
+        this.maxHp = 3;
 
         this.init();
     }
@@ -22,8 +27,9 @@ export class Player extends Phaser.GameObjects.Sprite {
         this.setDisplaySize(100, 100);
         this.bullets = new Bullets(this.scene);
 
-        // Не даем вылетать за границы
         this.body.setCollideWorldBounds(true);
+
+        this.spaceKey = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.scene.events.on('update', this.update, this);
         this.setAlive(false);
@@ -31,17 +37,22 @@ export class Player extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.active) {
-            this.move();
-            this.autoShoot();
+            if (this.controlsEnabled) {
+                this.move();
+            }
+            if (this.shootingEnabled) {
+                this.manualShoot();
+            }
         }
     }
 
-    autoShoot() {
-        const now = this.scene.time.now;
-
-        if (now - this.lastShot >= this.shootDelay) {
-            this.lastShot = now;
-            this.bullets.createBullet(this);
+    manualShoot() {
+        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+            const now = this.scene.time.now;
+            if (now - this.lastShot >= this.shootDelay) {
+                this.lastShot = now;
+                this.bullets.createBullet(this);
+            }
         }
     }
 
@@ -58,10 +69,111 @@ export class Player extends Phaser.GameObjects.Sprite {
         }
     }
 
+    takeDamage(amount) {
+        // НЕ НАНОСИМ УРОН, ЕСЛИ ИГРОК НЕУЯЗВИМ
+        if (!this.active || this.invincible) return;
+        
+        this.setTint(0xff0000);
+        this.scene.time.delayedCall(100, () => this.clearTint());
+        
+        this.hp -= amount;
+        this.scene.updateLivesDisplay();
+        
+        if (this.hp <= 0) {
+            this.die();
+        } else {
+            this.makeInvincible();
+        }
+    }
+    
+    makeInvincible() {
+        this.invincible = true;
+        // НЕ отключаем управление и стрельбу, только мигаем
+        // this.controlsEnabled = false;
+        // this.shootingEnabled = false;
+        
+        let blinkCount = 0;
+        const maxBlinks = 8;
+        
+        const blinkInterval = this.scene.time.addEvent({
+            delay: 150,
+            callback: () => {
+                this.visible = !this.visible;
+                blinkCount++;
+                if (blinkCount >= maxBlinks) {
+                    blinkInterval.destroy();
+                    this.visible = true;
+                    this.invincible = false;
+                }
+            },
+            callbackScope: this,
+            loop: true
+        });
+    }
+    
+    die() {
+        this.disableControls();
+        this.setVisible(false);
+        this.setActive(false);
+        this.body.enable = false;
+        
+        this.scene.createExplosion(this.x, this.y);
+        
+        const sounds = this.scene.game.registry.get('sounds');
+        const soundEnabled = this.scene.game.registry.get('soundEnabled');
+        if (soundEnabled !== false && sounds && sounds.explosion) {
+            sounds.explosion.play();
+        }
+        
+        this.scene.time.delayedCall(500, () => {
+            this.scene.showGameOver();
+        });
+    }
+
+    disableControls() {
+        this.controlsEnabled = false;
+        this.shootingEnabled = false;
+        this.body.setVelocityX(0);
+    }
+
+    enableControls() {
+        this.controlsEnabled = true;
+        this.shootingEnabled = true;
+    }
+
+    flyAway() {
+        this.setFrame('ship_1');
+        this.disableControls();
+        this.body.setCollideWorldBounds(false);
+        this.body.setVelocityY(-500);
+    }
+
+    resetPosition() {
+        this.body.setVelocity(0, 0);
+        this.body.setCollideWorldBounds(true);
+        this.setPosition(this.scene.centerX, this.scene.scale.height - 150);
+        this.setVisible(true);
+        this.setActive(true);
+        this.body.enable = true;
+        this.invincible = false;  // <-- СБРАСЫВАЕМ ФЛАГ
+        this.controlsEnabled = true;
+        this.shootingEnabled = true;
+    }
+
     setAlive(status) {
         this.body.enable = status;
-        
         this.setActive(status);
         this.setVisible(status);
+        if (status) {
+            this.hp = this.maxHp;
+            this.invincible = false;  // <-- СБРАСЫВАЕМ ФЛАГ
+            this.scene.updateLivesDisplay();
+        }
+    }
+    
+    resetLives() {
+        this.hp = this.maxHp;
+        this.invincible = false;  // <-- СБРАСЫВАЕМ ФЛАГ
+        this.scene.updateLivesDisplay();
     }
 }

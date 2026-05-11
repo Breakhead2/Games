@@ -1,5 +1,5 @@
-// prefabs/Enemy.js
 import { EnemyTypes } from "../config/enemyTypes.js";
+import { EnemyBullet } from "./EnemyBullet.js";
 
 export class Enemy extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, typeKey) {
@@ -20,30 +20,18 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         this.scene.add.existing(this);
         this.scene.physics.add.existing(this);
         
-        // this.setDisplaySize(120, 120);
-        // this.setAngle(180);
         this.body.setCollideWorldBounds(false);
         this.setActive(false);
         this.setVisible(false);
-        // this.setScale(0.4);
 
-        this.setDisplaySize(120, 100);   // растягивает под нужный размер
-        this.body.setSize(120, 100);
+        this.setDisplaySize(100, 80);
+        this.body.setSize(100, 80);
         this.setAngle(180);
         
-        // Таймер стрельбы (будет запускаться при активации)
-        if (this.typeData.canShoot && this.typeData.shootCooldown) {
-            this.shootTimer = this.scene.time.addEvent({
-                delay: this.typeData.shootCooldown,
-                callback: () => this.shoot(),
-                callbackScope: this,
-                loop: true,
-                paused: true
-            });
-        }
+        // Не создаём таймер здесь!
+        this.shootTimer = null;
     }
     
-    // Активировать врага с заданными параметрами
     activate(enemyData, x, y) {
         this.enemyInstanceId = enemyData.id;
         this.currentHp = enemyData.currentHp;
@@ -53,21 +41,27 @@ export class Enemy extends Phaser.GameObjects.Sprite {
         this.isActive = true;
         this.body.setVelocity(0, 0);
         
-        // Запустить стрельбу, если нужно
-        if (this.shootTimer) {
-            this.shootTimer.paused = false;
+        // Создаём таймер при активации, если враг может стрелять
+        if (this.typeData.canShoot && this.typeData.shootCooldown && !this.shootTimer) {
+            this.shootTimer = this.scene.time.addEvent({
+                delay: this.typeData.shootCooldown,
+                callback: () => this.shoot(),
+                callbackScope: this,
+                loop: true
+            });
         }
     }
-    
-    // Деактивировать врага (ушёл за экран или временно вернуть в пул)
+
     deactivate() {
         this.setActive(false);
         this.setVisible(false);
         this.isActive = false;
         this.body.setVelocity(0, 0);
         
+        // Уничтожаем таймер при деактивации
         if (this.shootTimer) {
-            this.shootTimer.paused = true;
+            this.shootTimer.destroy();
+            this.shootTimer = null;
         }
     }
     
@@ -79,10 +73,10 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     
     moveTowardPlayer() {
         const player = this.scene.player;
-        if (!player || ! player.active) return;
+        if (!player || !player.active || !player.body) return;
         
         const diff = player.x - this.x;
-        const threshold = 5; // мёртвая зона в пикселях
+        const threshold = 5;
         
         if (Math.abs(diff) < threshold) {
             this.body.setVelocityX(0);
@@ -96,9 +90,7 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     }
     
     checkBounds() {
-        // Если улетел за нижнюю границу или слишком высоко
         if (this.y > this.scene.scale.height + 50 || this.y < -100) {
-            // Не уничтожаем, а уведомляем сцену о выходе
             this.scene.onEnemyExitScreen(this);
             this.deactivate();
         }
@@ -106,17 +98,35 @@ export class Enemy extends Phaser.GameObjects.Sprite {
     
     shoot() {
         if (!this.isActive) return;
-        // TODO: позже добавим создание снаряда
-        // console.log(`${this.typeKey} стреляет`);
+        
+        const bullets = this.scene.enemyBullets;
+        if (!bullets) return;
+        
+        const bullet = bullets.getFreeBullet();
+        if (bullet) {
+            bullet.activate(this.x, this.y + 20);
+        }
     }
     
-    // Вызвать при попадании (пока заглушка)
     takeDamage(amount) {
+        if (!this.isActive) return;
+        
         this.currentHp -= amount;
+        
+        this.setTint(0xff0000);
+        this.scene.time.delayedCall(100, () => this.clearTint());
+        
         if (this.currentHp <= 0) {
-            // Окончательно убит
             this.scene.onEnemyKilled(this);
             this.destroy();
+        } else {
+            // Если враг выжил, но получил урон от столкновения, 
+            // можно добавить небольшое отталкивание
+            const player = this.scene.player;
+            if (player && player.active) {
+                const direction = this.x > player.x ? 1 : -1;
+                this.body.setVelocityX(this.body.velocity.x + direction * 50);
+            }
         }
     }
     

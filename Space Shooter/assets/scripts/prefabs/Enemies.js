@@ -12,7 +12,6 @@ export class Enemies extends Phaser.Physics.Arcade.Group {
     // Инициализировать пул (создать спрайты заранее)
     initPool() {
         for (let i = 0; i < this.maxPoolSize; i++) {
-            // Временно создаём без типа, тип будет присвоен при активации
             const enemy = new Enemy(this.scene, -100, -100, 'soldier1'); // временный тип
             enemy.deactivate();
             this.add(enemy);

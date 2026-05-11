@@ -1,0 +1,78 @@
+{
+	"textures": [
+		{
+			"image": "enemies_bullet.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 128,
+				"h": 1024
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "bullet_red",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 205
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 205
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 205
+					}
+				},
+				{
+					"filename": "bullet_blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 205
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 205
+					},
+					"frame": {
+						"x": 128,
+						"y": 410,
+						"w": 128,
+						"h": 205
+					}
+				},
+				{
+					"filename": "bullet_yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 128,
+						"h": 205
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 128,
+						"h": 205
+					},
+					"frame": {
+						"x": 128,
+						"y": 615,
+						"w": 128,
+						"h": 205
+					}
+				}
+			]
+		}
+	]
+}
