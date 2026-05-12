@@ -188,7 +188,7 @@ export class BaseScene extends Phaser.Scene {
     }
 
     createBackButton(x = 20, y = 20) {
-        const backBtn = this.add.text(x, y, '← НАЗАД', {
+        const backBtn = this.add.text(x, y, '← GO TO METU', {
             fontSize: '18px',
             fill: '#0ff',
             fontFamily: 'monospace',
