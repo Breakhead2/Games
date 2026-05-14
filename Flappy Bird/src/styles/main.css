@@ -1,0 +1,40 @@
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Тело страницы */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #000;
+}
+
+/* Контейнер игры */
+#game-container {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Канвас */
+canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Анимация для вращения телефона */
+@keyframes rotate-phone {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+    100% { transform: rotate(0deg); }
+}
