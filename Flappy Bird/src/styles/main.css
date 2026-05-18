@@ -25,13 +25,6 @@ body {
     display: block;
 }
 
-/* Канвас */
-canvas {
-    display: block;
-    width: 100% !important;
-    height: 100% !important;
-}
-
 /* Анимация для вращения телефона */
 @keyframes rotate-phone {
     0% { transform: rotate(0deg); }

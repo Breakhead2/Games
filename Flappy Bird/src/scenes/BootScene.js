@@ -3,22 +3,25 @@ import Phaser from 'phaser';
 export class BootScene extends Phaser.Scene {
     constructor() {
         super({ key: 'BootScene' });
-        this.isOverlayVisible = false; // Флаг для отслеживания состояния
+        this.isOverlayVisible = false;
     }
 
-    create() {
+    preload() {
+        this.load.image('menu_bg', './public/assets/menu_background.png');
+        this.load.image('bg', './public/assets/background.png');
+        
         // Отключаем контекстное меню (ПК: правый клик)
-        this.game.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+        //this.game.canvas.addEventListener('contextmenu', (e) => e.preventDefault());
         
         // Слушаем изменение ориентации
-        this.scale.on('orientationchange', this.handleOrientation, this);
+        //this.scale.on('orientationchange', this.handleOrientation, this);
         
         // Проверяем текущую ориентацию (с задержкой, чтобы scale успел инициализироваться)
-        this.time.delayedCall(100, () => {
-            this.handleOrientation(this.scale.orientation);
-        });
-        
-        // Переходим в меню
+        //this.time.delayedCall(100, () => {this.handleOrientation(this.scale.orientation);});
+    }
+
+
+    create() {
         this.scene.start('MenuScene');
     }
 

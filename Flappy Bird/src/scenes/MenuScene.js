@@ -7,15 +7,18 @@ export class MenuScene extends Phaser.Scene {
 
     create() {
         const { width, height } = this.scale;
+
+        this.add.image(0, 0, 'menu_bg').setOrigin(0);
         
         // Адаптивный заголовок
         const title = this.add.text(width / 2, height * 0.3, 'FLAPPY BIRD', {
-            fontSize: `${Math.min(width * 0.08, 64)}px`,
+            fontSize: `${Math.min(Math.round(width * 0.08), 64)}px`,
             fill: '#fff',
             fontFamily: 'Arial',
             fontWeight: 'bold',
             stroke: '#000',
-            strokeThickness: 4
+            strokeThickness: 4,
+            resolution: 2
         }).setOrigin(0.5);
         
         // Адаптивная инструкция

@@ -7,19 +7,20 @@ import { GameScene } from './scenes/GameScene.js';
 const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
+    physics: {
+        default: 'arcade',
+        arcade: {
+            debug: false,
+            gravity: { y: 0 }
+        }
+    },
     scale: {
-        mode: Phaser.Scale.RESIZE,  // КЛЮЧ: всегда весь экран
+        mode: Phaser.Scale.NONE,
         autoCenter: Phaser.Scale.CENTER_BOTH,
-        width: 1920,
-        height: 1080
+        width: 640,
+        height: 360
     },
     pixelArt: true,
-    backgroundColor: '#70c5ce',
-    input: {
-        // Отключаем стандартные жесты браузера для мобилок
-        activePointers: 1,
-        touchCancel: (pointer, event) => event.preventDefault()
-    },
     scene: [BootScene, MenuScene, GameScene]
 };
 
